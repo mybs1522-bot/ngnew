@@ -73,7 +73,7 @@ const SketchupPage: React.FC = () => {
           <h3 className="text-xl font-display font-bold mb-1 line-clamp-1">SketchUp Architecture Course</h3>
           <div className="flex items-baseline gap-2">
              <span className="text-2xl font-display font-black uppercase text-white">FREE</span>
-             <span className="text-orange-100 text-xs font-bold px-2 py-0.5 rounded-full border border-orange-300 ml-auto">+ $1.56 processing fee</span>
+             <span className="text-orange-100 text-xs font-bold px-2 py-0.5 rounded-full border border-orange-300 ml-auto">+ ₦2,500 processing fee</span>
           </div>
         </div>
 
@@ -113,7 +113,7 @@ const SketchupPage: React.FC = () => {
           </div>
           {emailError && <p className="text-red-500 text-[10px] mb-2 font-bold">Enter a valid email address</p>}
 
-          <ModernPaymentForm bare email={email} onSuccess={handleSuccess} amount="$1.56" />
+          <ModernPaymentForm bare email={email} onSuccess={handleSuccess} amount="₦2,500" />
 
           <div className="flex items-center justify-center gap-1.5 mt-4 text-[11px] text-gray-500 font-medium text-center">
             🎓 Skill Certificate will be automatically mailed after you complete the course.

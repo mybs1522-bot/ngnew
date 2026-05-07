@@ -141,7 +141,7 @@ const CheckoutPage: React.FC = () => {
               sessionStorage.setItem('checkout_fullname', fullName.trim());
               sessionStorage.setItem('checkout_email', email);
               const redirectUrl = `${window.location.origin}/onetime`;
-              const selarUrl = `https://selar.com/course3d?quickcheckout=1&email=${encodeURIComponent(email)}&fullname=${encodeURIComponent(fullName.trim())}&currency=NGN&redirect_url=${encodeURIComponent(redirectUrl)}`;
+              const selarUrl = `https://selar.com/8w97ef6b6h?quickcheckout=1&email=${encodeURIComponent(email)}&fullname=${encodeURIComponent(fullName.trim())}&currency=NGN&redirect_url=${encodeURIComponent(redirectUrl)}`;
               window.location.href = selarUrl;
             }}
             className="w-full py-4 bg-green-600 hover:bg-green-700 rounded-xl flex items-center justify-center gap-2.5 transition-all"

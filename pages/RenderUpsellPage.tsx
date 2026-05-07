@@ -187,7 +187,7 @@ const RenderUpsellPage: React.FC = () => {
               <li className="flex items-start gap-2"><span className="text-red-400 shrink-0 mt-0.5">•</span>Gray wireframe models no one understands</li>
               <li className="flex items-start gap-2"><span className="text-red-400 shrink-0 mt-0.5">•</span>Clients can't visualize the final look</li>
               <li className="flex items-start gap-2"><span className="text-red-400 shrink-0 mt-0.5">•</span>You lose projects to designers with renders</li>
-              <li className="flex items-start gap-2"><span className="text-red-400 shrink-0 mt-0.5">•</span>Can only charge $200–$500 per project</li>
+              <li className="flex items-start gap-2"><span className="text-red-400 shrink-0 mt-0.5">•</span>Can only charge ₦30,000–₦80,000 per project</li>
             </ul>
           </div>
           <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5">
@@ -196,7 +196,7 @@ const RenderUpsellPage: React.FC = () => {
               <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0 mt-0.5">•</span>Photorealistic images that look like real photos</li>
               <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0 mt-0.5">•</span>Clients get excited and approve instantly</li>
               <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0 mt-0.5">•</span>Stand out from every other designer</li>
-              <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0 mt-0.5">•</span>Charge $2,000–$5,000+ per project</li>
+              <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0 mt-0.5">•</span>Charge ₦300,000–₦800,000+ per project</li>
             </ul>
           </div>
         </div>

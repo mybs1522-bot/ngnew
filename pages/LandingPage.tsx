@@ -330,6 +330,53 @@ const LandingPage: React.FC = () => {
         </section>
 
 
+        {/* ═══════ FREELANCE PROJECTS — ₦200,000 Guaranteed ═══════ */}
+        <section className="py-12 md:py-16 bg-gradient-to-br from-green-50 to-emerald-50 border-b border-green-200">
+          <div className="max-w-4xl mx-auto px-5">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-100 border border-green-300 rounded-full mb-4">
+                <span className="text-green-600 text-xs font-bold uppercase tracking-widest">🇳🇬 Every Student Gets This</span>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-display font-black text-slate-900 tracking-tight mb-4">
+                ₦200,000 Worth of <span className="text-green-600">Freelance Projects</span>
+              </h2>
+              <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto">
+                We don't just teach you — we give you real paying work. Every enrolled student receives guaranteed freelance projects worth ₦200,000 to build their portfolio and earn while learning.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white border border-green-200 rounded-2xl p-6 shadow-sm text-center">
+                <span className="text-3xl mb-3 block">🏠</span>
+                <h3 className="font-bold text-slate-900 text-lg mb-1">Residential Renders</h3>
+                <p className="text-sm text-slate-500">Create photorealistic renders for real homeowners and developers</p>
+                <p className="mt-3 text-green-600 font-black text-lg">₦50,000 – ₦80,000</p>
+              </div>
+              <div className="bg-white border border-green-200 rounded-2xl p-6 shadow-sm text-center">
+                <span className="text-3xl mb-3 block">🏢</span>
+                <h3 className="font-bold text-slate-900 text-lg mb-1">Commercial Projects</h3>
+                <p className="text-sm text-slate-500">Office spaces, retail stores & restaurant visualizations</p>
+                <p className="mt-3 text-green-600 font-black text-lg">₦60,000 – ₦100,000</p>
+              </div>
+              <div className="bg-white border border-green-200 rounded-2xl p-6 shadow-sm text-center">
+                <span className="text-3xl mb-3 block">🎨</span>
+                <h3 className="font-bold text-slate-900 text-lg mb-1">Interior Styling</h3>
+                <p className="text-sm text-slate-500">3D walkthroughs & mood boards for interior clients</p>
+                <p className="mt-3 text-green-600 font-black text-lg">₦40,000 – ₦70,000</p>
+              </div>
+            </div>
+            <div className="mt-8 bg-white border-2 border-green-300 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl">💰</div>
+                <div>
+                  <p className="font-black text-slate-900 text-lg">Total Guaranteed Project Value</p>
+                  <p className="text-sm text-slate-500">Real clients. Real money. While you learn.</p>
+                </div>
+              </div>
+              <span className="text-3xl font-black text-green-600">₦200,000</span>
+            </div>
+          </div>
+        </section>
+
         {/* 6. INCOME TIERS — The ROI */}
         <section className="py-16 bg-white border-b border-slate-200">
           <div className="max-w-5xl mx-auto px-5">
@@ -415,7 +462,7 @@ const LandingPage: React.FC = () => {
               <h2 className="text-3xl md:text-5xl font-serif italic text-slate-900 mb-8 leading-snug">"We believe every designer deserves restaurant-quality tools at street-food prices."</h2>
             </div>
             <div className="reveal space-y-6 text-slate-600 text-base md:text-lg leading-relaxed">
-              <p>Learning SketchUp, V-Ray, and D5 Render separately? That's <strong className="text-slate-900">$300+ in courses, months of confusion, and a dozen browser tabs</strong> you'll never close.</p>
+              <p>Learning SketchUp, V-Ray, and D5 Render separately? That's <strong className="text-slate-900">₦500,000+ in courses, months of confusion, and a dozen browser tabs</strong> you'll never close.</p>
               <p>We built this bundle because <strong className="text-orange-600">the rendering pipeline shouldn't be gatekept</strong>. Whether you're a student, a freelancer, or a studio owner — you deserve a clear, guided path from 3D model to photorealistic render.</p>
               <p>Every lesson is designed so you build <strong className="text-slate-900">real projects</strong>. Not theory. Not fluff. Actual rooms, actual renders, actual portfolio pieces.</p>
               

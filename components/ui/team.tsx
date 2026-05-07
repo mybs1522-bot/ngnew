@@ -3,12 +3,11 @@ import { Marquee } from "./marquee";
 import { Users } from "lucide-react";
 
 const teamMembers = [
-  { image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=560&fit=crop&crop=face", name: "James Carter", role: "Lead Architecture Instructor" },
-  { image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=560&fit=crop&crop=face", name: "Sofia Reyes", role: "Interior Design Expert" },
-  { image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=560&fit=crop&crop=face", name: "Marcus Webb", role: "3D Visualization Specialist" },
-  { image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=560&fit=crop&crop=face", name: "Claire Dubois", role: "SketchUp & V-Ray Mentor" },
-  { image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=560&fit=crop&crop=face", name: "Ethan Müller", role: "AutoCAD & BIM Lead" },
-  { image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=560&fit=crop&crop=face", name: "Layla Hassan", role: "Lumion & AI Design Coach" },
+  { image: "https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", name: "Chinedu Okafor", role: "Lead Architecture Instructor" },
+  { image: "https://images.unsplash.com/photo-1678282342910-a135f7b900ae?q=80&w=1296&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", name: "Adaeze Nwosu", role: "Interior Design Expert" },
+  { image: "https://images.pexels.com/photos/36813835/pexels-photo-36813835.jpeg", name: "Emeka Adeyemi", role: "3D Visualization & AI Coach" },
+  { image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=560&fit=crop&crop=face", name: "James Carter", role: "SketchUp & V-Ray Mentor" },
+  { image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=560&fit=crop&crop=face", name: "Sofia Reyes", role: "Lumion & Rendering Specialist" },
 ];
 
 export default function TeamSection() {
@@ -58,14 +57,14 @@ export default function TeamSection() {
           <div className="flex flex-col items-center gap-3">
             <div className="relative h-14 w-14 overflow-hidden rounded-full">
               <img
-                alt="Sofia Reyes"
+                alt="Chinedu Okafor"
                 className="h-full w-full object-cover"
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face"
+                src="https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?q=80&w=200&auto=format&fit=crop"
               />
             </div>
             <div className="text-center">
-              <p className="font-semibold text-slate-900">Sofia Reyes</p>
-              <p className="text-slate-500 text-sm">Interior Design Expert · Avada Design Faculty</p>
+              <p className="font-semibold text-slate-900">Chinedu Okafor</p>
+              <p className="text-slate-500 text-sm">Lead Architecture Instructor · Avada Design Faculty</p>
             </div>
           </div>
         </div>

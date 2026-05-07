@@ -341,7 +341,7 @@ const ClaimModal: React.FC<{ onClose: () => void; onSuccess: () => void }> = ({ 
               <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4 text-left">
                 <p className="text-orange-700 font-bold text-sm mb-1">⏳ We're preparing your next lesson...</p>
                 <p className="text-orange-600 text-xs leading-relaxed">
-                  SketchUp is just the design tool. Now let's get you the <strong>AI Rendering skills</strong> that win clients and charge $2,000–$5,000 per project.
+                  SketchUp is just the design tool. Now let's get you the <strong>AI Rendering skills</strong> that win clients and charge ₦300,000–₦800,000 per project.
                 </p>
               </div>
               <div className="flex items-center justify-center gap-2 mt-5 text-orange-500">
@@ -591,7 +591,7 @@ const SketchupLandingPage: React.FC = () => {
               <div className="relative z-10">
                 <h3 className="text-2xl md:text-3xl font-bold font-display mb-2">Claim Your Free Access</h3>
                 <div className="flex items-center justify-center gap-3 text-sm text-slate-300 mb-7 font-medium flex-wrap">
-                  <span className="line-through text-slate-500">$99.00 Value</span>
+                  <span className="line-through text-slate-500">₦99,000 Value</span>
                   <span className="text-slate-600">•</span>
                   <span className="text-emerald-400 font-black">Yours 100% Free</span>
                   <span className="text-slate-600">•</span>
