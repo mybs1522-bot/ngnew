@@ -230,9 +230,9 @@ export const COURSES = RAW_COURSES.map(course => {
   return { ...course, imageUrl: url };
 });
 
-// ─── FRONT-END OFFER: SketchUp + V-Ray + D5 Render ───
-export const FRONT_END_IDS = ['3', '5', '7'];
-export const FRONT_END_COURSES = COURSES.filter(c => FRONT_END_IDS.includes(c.id));
+// ─── FRONT-END OFFER: AutoCAD + SketchUp + V-Ray + D5 Render ───
+export const FRONT_END_IDS = ['1', '3', '5', '7'];
+export const FRONT_END_COURSES = FRONT_END_IDS.map(id => COURSES.find(c => c.id === id)!).filter(Boolean);
 
 // ─── UPSELL: Everything else ───
 export const UPSELL_COURSES = COURSES.filter(c => !FRONT_END_IDS.includes(c.id));

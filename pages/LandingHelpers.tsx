@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, ShieldCheck, Zap, CheckCircle, Users, X } from 'lucide-react';
+import { CountryConfig } from '../lib/countryConfig';
+import { useCountry } from '../lib/CountryContext';
 
 export const getDriveUrl = (id: string) => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
 
-export const RAW_JOINERS = [
-  { name: "Chinedu O.", city: "Lagos", time: "2 min ago" },
-  { name: "Adaeze N.", city: "Abuja", time: "5 min ago" },
-  { name: "Emeka A.", city: "Port Harcourt", time: "8 min ago" },
-  { name: "Funke B.", city: "Ibadan", time: "12 min ago" },
-  { name: "Tunde K.", city: "Lagos", time: "15 min ago" },
-  { name: "Ngozi I.", city: "Enugu", time: "18 min ago" },
-  { name: "Yusuf M.", city: "Kano", time: "22 min ago" },
-  { name: "Blessing E.", city: "Benin City", time: "25 min ago" },
-  { name: "Obinna C.", city: "Owerri", time: "30 min ago" },
-  { name: "Amina D.", city: "Abuja", time: "33 min ago" },
-];
+const TIMES = ["2 min ago","5 min ago","8 min ago","12 min ago","15 min ago","18 min ago","22 min ago","25 min ago","30 min ago","33 min ago"];
+
+export function getJoiners(c: CountryConfig) {
+  return c.cities.map((p, i) => ({ name: p.name, city: p.city, time: TIMES[i % TIMES.length] }));
+}
 
 export const PROBLEM_POINTS = [
   { emoji: "⏰", text: "Spending days on a single 3D view because you don't know SketchUp, V-Ray, or D5 Render — and clients keep asking for revisions?" },
@@ -22,10 +17,12 @@ export const PROBLEM_POINTS = [
   { emoji: "🤖", text: "Watching AI generate stunning renders in seconds and worrying your traditional skills will become obsolete before you catch up?" }
 ];
 
-export const TRANSFORMATION_STORIES = [
-  { name: "Funke B.", role: "Freelance Designer, Ibadan", before: "Struggling alone with YouTube tutorials for months. Her SketchUp models looked amateur, V-Ray kept crashing, and clients wouldn't pay more than ₦30,000.", after: "Mastered the full SketchUp → V-Ray → D5 Render AI pipeline with 24/7 team support. Now charges ₦500,000+ per room and delivers in 48 hours instead of 2 weeks.", emoji: "✨" },
-  { name: "Obinna C.", role: "Architecture Student, Owerri", before: "Terrified of AI replacing his future job. College taught outdated software. Had no rendering skills and zero portfolio pieces worth showing.", after: "We walked him through the entire design-to-render workflow. He now uses SketchUp for modeling, V-Ray for stills, and D5 AI for real-time client presentations. Just landed a dream internship in Lagos.", emoji: "🎓" }
-];
+export function getTransformationStories(c: CountryConfig) {
+  return [
+    { name: "Funke B.", role: `Freelance Designer, ${c.cities[3]?.city || c.cities[0]?.city}`, before: `Struggling alone with YouTube tutorials for months. Her SketchUp models looked amateur, V-Ray kept crashing, and clients wouldn't pay more than a fraction of the going rate.`, after: `Mastered the full SketchUp → V-Ray → D5 Render AI pipeline with 24/7 team support. Now charges premium rates per room and delivers in 48 hours instead of 2 weeks.`, emoji: "✨" },
+    { name: "Obinna C.", role: `Architecture Student, ${c.cities[8]?.city || c.cities[0]?.city}`, before: "Terrified of AI replacing his future job. College taught outdated software. Had no rendering skills and zero portfolio pieces worth showing.", after: `We walked him through the entire design-to-render workflow. He now uses SketchUp for modeling, V-Ray for stills, and D5 AI for real-time client presentations. Just landed a dream internship in ${c.cities[0]?.city}.`, emoji: "🎓" }
+  ];
+}
 
 export const PAGE_PREVIEWS_ROW1 = [
   '/renders/RENDER-1.jpg', '/renders/RENDER-2.jpg', '/renders/RENDER-3.jpg',
@@ -81,11 +78,11 @@ export const CallToActionWidget = ({ timeLeft, onClick, headline, subtext }: { t
           <div className="flip-clock-group"><div className="flex gap-1"><FlipDigit value={s[0]} /><FlipDigit value={s[1]} /></div><span className="flip-clock-label">SEC</span></div>
         </div>
         <div className="mb-6">
-          <p className="text-red-400 font-semibold text-sm mt-2">SketchUp + V-Ray + D5 Render AI — All 3 Courses for Just ₦15,000</p>
+          <p className="text-red-400 font-semibold text-sm mt-2">AutoCAD + SketchUp + V-Ray + D5 Render AI — All 4 Courses</p>
         </div>
         <div className="w-full max-w-md mx-auto">
           <button onClick={onClick} className="cta-primary w-full text-white px-8 py-4 md:py-5 rounded-2xl transition-all duration-300 flex items-center justify-center gap-3 group hover:scale-[1.03] active:scale-[0.98] premium-stroke" style={{ background: 'linear-gradient(135deg, #f7a440 0%, #f7931e 100%)', boxShadow: '0 6px 20px -4px rgba(247,164,68,0.5), 0 12px 40px -8px rgba(247,147,30,0.25)', border: '1px solid rgba(255,255,255,0.15)' }}>
-            <span className="text-lg md:text-xl font-display font-bold uppercase tracking-widest relative z-10">Get Instant Access — ₦15,000</span>
+            <span className="text-lg md:text-xl font-display font-bold uppercase tracking-widest relative z-10">Get Instant Access</span>
             <ArrowRight size={20} className="relative z-10 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
@@ -103,15 +100,17 @@ export const CallToActionWidget = ({ timeLeft, onClick, headline, subtext }: { t
 
 /* ─── SOCIAL PROOF TOAST ─── */
 export const SocialProofToast: React.FC = () => {
+  const { country } = useCountry();
+  const joiners = getJoiners(country);
   const [visible, setVisible] = useState(false);
   const [idx, setIdx] = useState(0);
   useEffect(() => {
-    const show = () => { setVisible(true); setTimeout(() => { setVisible(false); setTimeout(() => setIdx(p => (p + 1) % RAW_JOINERS.length), 400); }, 2500); };
+    const show = () => { setVisible(true); setTimeout(() => { setVisible(false); setTimeout(() => setIdx(p => (p + 1) % joiners.length), 400); }, 2500); };
     const t1 = setTimeout(show, 8000);
     const t2 = setInterval(show, 22000);
     return () => { clearTimeout(t1); clearInterval(t2); };
-  }, []);
-  const j = RAW_JOINERS[idx];
+  }, [joiners.length]);
+  const j = joiners[idx];
   return (
     <div className={`fixed bottom-20 left-3 z-[70] transition-all duration-400 ${visible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
       <div className="bg-white/95 backdrop-blur-xl border border-slate-100 rounded-full px-3 py-1.5 shadow-md flex items-center gap-2">
@@ -123,49 +122,67 @@ export const SocialProofToast: React.FC = () => {
 };
 
 /* ─── CONSTANTS ─── */
-export const VALUE_STACK_ITEMS = [
-  { name: 'SketchUp 3D Modeling — Complete Course', value: 'Included' },
-  { name: 'V-Ray Photo-Realism Masterclass', value: 'Included' },
-  { name: 'D5 Real-Time AI Rendering Course', value: 'Included' },
-  { name: '₦200,000 Worth of Freelance Projects — Guaranteed', value: '₦200,000' },
-  { name: '10,000+ Premium Texture Library', value: 'Included' },
-  { name: '2,000+ Drag-and-Drop 3D Models', value: 'Included' },
-  { name: 'Software Installation Hub', value: 'Included' },
-  { name: '24/7 Team Access & Portfolio Review', value: 'Included' },
-  { name: 'Certified Digital Diploma', value: 'Included' },
-];
+export function getValueStackItems(c: CountryConfig) {
+  return [
+    { name: 'AutoCAD 2D Drafting — Complete Course', value: 'Included' },
+    { name: 'SketchUp 3D Modeling — Complete Course', value: 'Included' },
+    { name: 'V-Ray Photo-Realism Masterclass', value: 'Included' },
+    { name: 'D5 Real-Time AI Rendering Course', value: 'Included' },
+    { name: `${c.freelanceTotal} Worth of Freelance Projects — Guaranteed`, value: c.freelanceTotal },
+    { name: '10,000+ Premium Texture Library', value: 'Included' },
+    { name: '2,000+ Drag-and-Drop 3D Models', value: 'Included' },
+    { name: 'Software Installation Hub', value: 'Included' },
+    { name: '24/7 Team Access & Portfolio Review', value: 'Included' },
+    { name: 'Certified Digital Diploma', value: 'Included' },
+  ];
+}
 
-export const TESTIMONIALS_LANDING = [
-  { name: 'Chinedu O.', role: 'Freelance Designer', location: 'Lagos, Nigeria', content: 'I went from zero SketchUp knowledge to delivering photorealistic V-Ray renders in 3 weeks. The 24/7 support team patiently walked me through every crash and weird shadow. Now I use D5 Render AI and feel completely secure in my career.' },
-  { name: 'Tunde K.', role: 'Senior Architect', location: 'Lagos, Nigeria', content: 'Having SketchUp, V-Ray, and D5 Render in one bundle is genius. My studio now uses the full pipeline to generate gorgeous client presentations in minutes. Best ₦15,000 our firm ever invested.' },
-  { name: 'Ngozi I.', role: '3D Visualizer', location: 'Enugu, Nigeria', content: 'The step-by-step guidance from SketchUp modeling to final V-Ray render is incredible. The D5 Render course lets me make real-time changes during client meetings. Complete game-changer.' },
-  { name: 'Obinna C.', role: 'Architecture Student', location: 'Owerri, Nigeria', content: 'University taught me outdated software. This bundle gave me SketchUp + two rendering engines in two weeks. I started freelancing before graduation and now earn more than some employed architects.' },
-  { name: 'Adaeze N.', role: 'Interior Designer', location: 'Abuja, Nigeria', content: 'To have someone look at your screen and say "press this button" saves weeks of frustration. The SketchUp course builds the model, V-Ray makes it stunning, D5 makes it instant. All for ₦15,000.' },
-  { name: 'Emeka A.', role: 'Landscape Architect', location: 'Port Harcourt, Nigeria', content: 'D5 Render combined with V-Ray is just magical. I model in SketchUp, do beauty shots in V-Ray, and use D5 for real-time client walkthroughs. It took away all my anxiety about falling behind.' },
-  { name: 'Funke B.', role: 'Studio Owner', location: 'Ibadan, Nigeria', content: 'My team of 4 now works with zero stress because we integrated the SketchUp → V-Ray → D5 pipeline. No more late nights before client meetings. We deliver faster, charge more.' },
-  { name: 'Yusuf M.', role: 'Freelance Visualizer', location: 'Kano, Nigeria', content: 'I almost quit 3D entirely because I couldn\'t connect the dots between modeling and rendering. This bundle connected everything. SketchUp for structure, V-Ray for polish, D5 AI for speed.' },
-  { name: 'Blessing E.', role: 'Design Student', location: 'Benin City, Nigeria', content: 'Started from absolute zero. Didn\'t even know what SketchUp was. 15 days later, my portfolio had photorealistic renders from V-Ray and real-time walkthroughs from D5 that landed me a paid studio gig.' },
-  { name: 'Amina D.', role: 'Architect & Educator', location: 'Abuja, Nigeria', content: 'Universities don\'t teach this pipeline. SketchUp + V-Ray + D5 Render AI is the modern standard. I recommend this ₦15,000 bundle to all my students — it\'s more practical than their entire semester.' },
-];
+export function getTestimonialsLanding(c: CountryConfig) {
+  const p = c.formattedPrice;
+  return [
+    { name: c.cities[0]?.name || 'Chinedu O.', role: 'Freelance Designer', location: `${c.cities[0]?.city}, ${c.name}`, content: 'I went from zero SketchUp knowledge to delivering photorealistic V-Ray renders in 3 weeks. The 24/7 support team patiently walked me through every crash and weird shadow. Now I use D5 Render AI and feel completely secure in my career.' },
+    { name: c.cities[4]?.name || 'Tunde K.', role: 'Senior Architect', location: `${c.cities[4]?.city || c.cities[0]?.city}, ${c.name}`, content: `Having SketchUp, V-Ray, and D5 Render in one bundle is genius. My studio now uses the full pipeline to generate gorgeous client presentations in minutes. Best ${p} our firm ever invested.` },
+    { name: c.cities[5]?.name || 'Ngozi I.', role: '3D Visualizer', location: `${c.cities[5]?.city || c.cities[0]?.city}, ${c.name}`, content: 'The step-by-step guidance from SketchUp modeling to final V-Ray render is incredible. The D5 Render course lets me make real-time changes during client meetings. Complete game-changer.' },
+    { name: c.cities[8]?.name || 'Obinna C.', role: 'Architecture Student', location: `${c.cities[8]?.city || c.cities[0]?.city}, ${c.name}`, content: 'University taught me outdated software. This bundle gave me SketchUp + two rendering engines in two weeks. I started freelancing before graduation and now earn more than some employed architects.' },
+    { name: c.cities[1]?.name || 'Adaeze N.', role: 'Interior Designer', location: `${c.cities[1]?.city}, ${c.name}`, content: `To have someone look at your screen and say "press this button" saves weeks of frustration. The SketchUp course builds the model, V-Ray makes it stunning, D5 makes it instant. All for ${p}.` },
+    { name: c.cities[2]?.name || 'Emeka A.', role: 'Landscape Architect', location: `${c.cities[2]?.city}, ${c.name}`, content: 'D5 Render combined with V-Ray is just magical. I model in SketchUp, do beauty shots in V-Ray, and use D5 for real-time client walkthroughs. It took away all my anxiety about falling behind.' },
+    { name: c.cities[3]?.name || 'Funke B.', role: 'Studio Owner', location: `${c.cities[3]?.city}, ${c.name}`, content: 'My team of 4 now works with zero stress because we integrated the SketchUp → V-Ray → D5 pipeline. No more late nights before client meetings. We deliver faster, charge more.' },
+    { name: c.cities[6]?.name || 'Yusuf M.', role: 'Freelance Visualizer', location: `${c.cities[6]?.city}, ${c.name}`, content: 'I almost quit 3D entirely because I couldn\'t connect the dots between modeling and rendering. This bundle connected everything. SketchUp for structure, V-Ray for polish, D5 AI for speed.' },
+    { name: c.cities[7]?.name || 'Blessing E.', role: 'Design Student', location: `${c.cities[7]?.city}, ${c.name}`, content: 'Started from absolute zero. Didn\'t even know what SketchUp was. 15 days later, my portfolio had photorealistic renders from V-Ray and real-time walkthroughs from D5 that landed me a paid studio gig.' },
+    { name: c.cities[9]?.name || 'Amina D.', role: 'Architect & Educator', location: `${c.cities[9]?.city || c.cities[1]?.city}, ${c.name}`, content: `Universities don\'t teach this pipeline. SketchUp + V-Ray + D5 Render AI is the modern standard. I recommend this ${p} bundle to all my students — it\'s more practical than their entire semester.` },
+  ];
+}
 
-export const FAQ_ITEMS_LANDING = [
-  { question: "What exactly do I get for ₦15,000?", answer: "You get 3 complete courses: SketchUp Pro (3D modeling from scratch), V-Ray Photorealism (magazine-quality renders), and D5 Render AI (real-time AI rendering). Plus ₦200,000 worth of freelance projects, 10,000+ textures, 2,000+ 3D models, all software download links, a certified diploma, and 24/7 team support. Lifetime access, one-time payment." },
-  { question: "I'm a complete beginner — is this for me?", answer: "Absolutely! The SketchUp course starts from 'how to open the software' and builds up to full 3D interiors. V-Ray and D5 Render courses follow the same beginner-friendly approach. Our 24/7 support team is always a WhatsApp message away whenever you feel stuck." },
-  { question: "Why is it so affordable? What's the catch?", answer: "No catch. We believe high-quality design education shouldn't cost ₦500,000+. We've served 50,000+ students at this price point and it works — low price, high volume, massive impact. You get the same content other platforms charge hundreds of thousands of Naira for." },
-  { question: "Do I need to buy expensive software?", answer: "Not at all. We provide links to official free or student versions of SketchUp, V-Ray, and D5 Render. You won't spend a single extra Naira on software licenses." },
-  { question: "Will this actually help me get clients or a job?", answer: "Yes. The #1 reason designers struggle to land clients is they can't produce photorealistic renders. This bundle teaches you the full pipeline — SketchUp to model, V-Ray for beauty shots, D5 AI for real-time presentations. Designers with these skills charge ₦300,000–₦800,000 per project." },
-  { question: "How long does it take to finish all 3 courses?", answer: "Most students complete the full pipeline in 2–3 weeks at 1–2 hours per day. SketchUp takes about 5 days, V-Ray about 4, and D5 Render about 3. By day 15, you'll have portfolio-ready renders." },
-  { question: "What if it's not for me?", answer: "We offer a 100% money-back guarantee within 7 days. If you feel it's not a good fit, just message us and we'll refund your ₦15,000 immediately — no questions asked. Zero risk." },
-];
+export function getFaqItemsLanding(c: CountryConfig) {
+  const p = c.formattedPrice;
+  return [
+    { question: `What exactly do I get for ${p}?`, answer: `You get 4 complete courses: AutoCAD (2D floor plans & blueprints), SketchUp Pro (3D modeling from scratch), V-Ray Photorealism (magazine-quality renders), and D5 Render AI (real-time AI rendering). Plus ${c.freelanceTotal} worth of freelance projects, 10,000+ textures, 2,000+ 3D models, all software download links, a certified diploma, and 24/7 team support. Lifetime access, one-time payment.` },
+    { question: "I'm a complete beginner — is this for me?", answer: "Absolutely! The AutoCAD course starts from basic lines and shapes, SketchUp from 'how to open the software' and builds up to full 3D interiors. V-Ray and D5 Render courses follow the same beginner-friendly approach. Our 24/7 support team is always a WhatsApp message away whenever you feel stuck." },
+    { question: "Why is it so affordable? What's the catch?", answer: `No catch. We believe high-quality design education shouldn't cost ${c.expensiveCourses}. We've served 50,000+ students at this price point and it works — low price, high volume, massive impact. You get the same content other platforms charge much more for.` },
+    { question: "Do I need to buy expensive software?", answer: "Not at all. We provide links to official free or student versions of AutoCAD, SketchUp, V-Ray, and D5 Render. You won't spend any extra on software licenses." },
+    { question: "Will this actually help me get clients or a job?", answer: `Yes. The #1 reason designers struggle to land clients is they can't produce professional drawings and photorealistic renders. This bundle teaches you the full pipeline — AutoCAD for plans, SketchUp to model, V-Ray for beauty shots, D5 AI for real-time presentations. Designers with these skills charge ${c.projectRange} per project.` },
+    { question: "How long does it take to finish all 4 courses?", answer: "Most students complete the full pipeline in 3–4 weeks at 1–2 hours per day. AutoCAD takes about 4 days, SketchUp about 5, V-Ray about 4, and D5 Render about 3. By day 20, you'll have portfolio-ready renders." },
+    { question: "What if it's not for me?", answer: `We offer a 100% money-back guarantee within 7 days. If you feel it's not a good fit, just message us and we'll refund your ${p} immediately — no questions asked. Zero risk.` },
+  ];
+}
 
-export const INCOME_TIERS = [
-  { label: 'Single Render Charge', before: 'Can\'t render at all', after: 'Confidently quoting ₦50,000+', icon: '🖼️' },
-  { label: 'Interior Design Project', before: 'Rejected for poor visuals', after: 'Winning ₦300,000–₦800,000 contracts', icon: '🏠' },
-  { label: 'Time to Finish a Room', before: '3 Frustrating Nights', after: '2 Hours with D5 Render AI', icon: '⏱️' },
-  { label: 'Your Career Confidence', before: 'Anxious & Overwhelmed', after: 'In-Demand Professional', icon: '🌟' },
-];
+export function getIncomeTiers(c: CountryConfig) {
+  return [
+    { label: 'Single Render Charge', before: 'Can\'t render at all', after: `Confidently quoting ${c.renderCharge}`, icon: '🖼️' },
+    { label: 'Interior Design Project', before: 'Rejected for poor visuals', after: `Winning ${c.projectRange} contracts`, icon: '🏠' },
+    { label: 'Time to Finish a Room', before: '3 Frustrating Nights', after: '2 Hours with D5 Render AI', icon: '⏱️' },
+    { label: 'Your Career Confidence', before: 'Anxious & Overwhelmed', after: 'In-Demand Professional', icon: '🌟' },
+  ];
+}
 
 export const COURSES_LANDING = [
+  {
+    id: '1', title: 'AutoCAD Mastery', software: 'AutoCAD', students: '42.5k',
+    description: 'Draw accurate 2D floor plans and blueprints — the essential starting point for every architectural project.',
+    imageUrl: 'https://lh3.googleusercontent.com/d/1fV5bz4JDugh8HxLMJ0fXu5K5sDj3qlSR',
+    learningPoints: ['Draw professional floor plans & furniture layouts', 'Print construction-ready drawings to scale', 'Use shortcuts to draft 10x faster'],
+    workflowImpact: 'Create professional blueprints that contractors can actually build from.'
+  },
   {
     id: '3', title: 'SketchUp 3D', software: 'SketchUp', students: '55k',
     description: 'Build stunning 3D models from scratch — walls, furniture, kitchens, bathrooms. The foundation of every great render starts here.',

@@ -4,10 +4,14 @@ import { Sparkles, Timer, CheckCircle2, Download, Mail, Lock, Check, X, ArrowRig
 import { useNavigate, useLocation } from "react-router-dom";
 import { sendStageEmail } from "../services/email";
 import FunnelProgressBar from "../components/FunnelProgressBar";
+import { useCountry } from '../lib/CountryContext';
+import { getUpsellDiscountPercent } from '../lib/countryConfig';
 
 const OnetimePage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { country } = useCountry();
+  const upsellDiscount = getUpsellDiscountPercent(country);
   const customerId = location.state?.customerId;
   const paymentMethodId = location.state?.paymentMethodId;
   const paymentIntentId = location.state?.paymentIntentId;
@@ -28,10 +32,10 @@ const OnetimePage: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if ((window as any).fbq) (window as any).fbq("track", "ViewContent", { content_name: "Avada Upsell", value: 37000, currency: "NGN" });
+    if ((window as any).fbq) (window as any).fbq("track", "ViewContent", { content_name: "Avada Upsell", value: country.upsellPrice, currency: country.currencyCode });
     // If arriving from crypto payment, fire purchase event
     if (isCryptoSuccess && emailFromState) {
-      if ((window as any).fbq) (window as any).fbq("track", "Purchase", { value: 37000, currency: "NGN" });
+      if ((window as any).fbq) (window as any).fbq("track", "Purchase", { value: country.upsellPrice, currency: country.currencyCode });
       sendStageEmail(emailFromState, 'render');
     }
   }, []);
@@ -56,7 +60,7 @@ const OnetimePage: React.FC = () => {
   const f = (v: number) => v.toString().padStart(2, "0");
 
   const handleSuccess = (newCustomerId?: string, newPaymentMethodId?: string) => {
-    if ((window as any).fbq) (window as any).fbq("track", "Purchase", { value: 37000, currency: "NGN" });
+    if ((window as any).fbq) (window as any).fbq("track", "Purchase", { value: country.upsellPrice, currency: country.currencyCode });
     sendStageEmail(email, 'full');
     navigate("/offer", { state: { customerId: newCustomerId ?? customerId, paymentMethodId: newPaymentMethodId ?? paymentMethodId, paymentIntentId, email } });
   };
@@ -76,7 +80,7 @@ const OnetimePage: React.FC = () => {
     }
     sessionStorage.setItem('checkout_fullname', fullName.trim());
     sessionStorage.setItem('checkout_email', email);
-    const selarUrl = `https://selar.com/xofm2g7c71?quickcheckout=1&email=${encodeURIComponent(email)}&fullname=${encodeURIComponent(fullName.trim())}&currency=NGN`;
+    const selarUrl = `${country.selarOnetimeBase}?quickcheckout=1&email=${encodeURIComponent(email)}&fullname=${encodeURIComponent(fullName.trim())}&currency=${country.currencyCode}`;
     window.location.href = selarUrl;
   };
 
@@ -113,10 +117,10 @@ const OnetimePage: React.FC = () => {
             <span className="text-xs font-bold text-orange-600 uppercase tracking-widest">One-Time Upgrade</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-display font-black mb-3 leading-tight text-gray-900">
-            Unlock 9 more courses to boost your <span className="text-orange-500">Interior Design</span> and Architecture career.
+            Unlock 8 more courses to boost your <span className="text-orange-500">Interior Design</span> and Architecture career.
           </h1>
           <p className="text-gray-600 text-base md:text-lg max-w-lg mx-auto">
-            You may need <strong className="text-gray-900">AutoCAD</strong> or maybe <strong className="text-gray-900">3DS Max</strong> at times, why not take all at this amazing one time price.
+            You may need <strong className="text-gray-900">Revit</strong> or maybe <strong className="text-gray-900">3DS Max</strong> at times, why not take all at this amazing one time price.
           </p>
         </div>
 
@@ -127,16 +131,16 @@ const OnetimePage: React.FC = () => {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <p className="text-xs font-bold uppercase tracking-widest text-orange-500 mb-1">Complete Bundle Upgrade</p>
-                <p className="text-gray-500 text-sm">9 Additional Premium Courses</p>
+                <p className="text-gray-500 text-sm">8 Additional Premium Courses</p>
               </div>
               <div className="text-right">
-                <span className="text-gray-400 text-lg line-through mr-2">₦99,000</span>
-                <span className="text-4xl font-display font-black text-gray-900">₦37,000</span>
+                <span className="text-gray-400 text-lg line-through mr-2">{country.formattedUpsellOriginalPrice}</span>
+                <span className="text-4xl font-display font-black text-gray-900">{country.formattedUpsellPrice}</span>
               </div>
             </div>
             <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-100 rounded-lg px-3 py-2">
               <Zap size={14} className="text-emerald-500" />
-              <span className="text-sm font-semibold text-emerald-700">You save ₦62,000 — that's 63% off!</span>
+              <span className="text-sm font-semibold text-emerald-700">You save {country.formattedUpsellSavings} — that's {upsellDiscount}% off!</span>
             </div>
           </div>
         </div>
@@ -147,9 +151,9 @@ const OnetimePage: React.FC = () => {
             className="w-full py-4 text-white font-bold text-lg rounded-2xl flex items-center justify-center gap-3 active:scale-[0.98] btn-pulse"
             style={{ background: 'linear-gradient(135deg,#f97316,#ea580c)' }}
           >
-            <span className="text-lg">🇳🇬</span>
+            <span className="text-lg">{country.flag}</span>
             <Gift size={20} />
-            Yes! Unlock All 9 Courses — ₦37,000
+            Yes! Unlock All 8 Courses — {country.formattedUpsellPrice}
             <ArrowRight size={20} />
           </button>
           <button
@@ -159,7 +163,7 @@ const OnetimePage: React.FC = () => {
             }}
             className="block w-full mt-3 py-1 text-center text-gray-400 hover:text-gray-500 text-[11px] font-medium transition-colors"
           >
-            No thanks, I'll pass on the 9 extra courses
+            No thanks, I'll pass on the 8 extra courses
           </button>
         </div>
 
@@ -192,7 +196,6 @@ const OnetimePage: React.FC = () => {
           <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4">Also Included with Upgrade:</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
-              "AutoCAD Precision Drafting",
               "BIM with Revit",
               "3ds Max Advanced Modeling",
               "Lumion Cinematic Walkthroughs",
@@ -221,9 +224,9 @@ const OnetimePage: React.FC = () => {
               onClick={handleSelarCheckout}
               className="w-full py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-lg rounded-2xl flex items-center justify-center gap-3 group active:scale-[0.98] transition-all btn-pulse"
             >
-              <span className="text-lg">🇳🇬</span>
+              <span className="text-lg">{country.flag}</span>
               <Gift size={20} />
-              Yes! Unlock All 9 Courses — ₦37,000
+              Yes! Unlock All 8 Courses — {country.formattedUpsellPrice}
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </button>
 
@@ -234,7 +237,7 @@ const OnetimePage: React.FC = () => {
               }}
               className="block w-full py-3 text-center text-gray-500 hover:text-gray-700 text-sm font-medium transition-colors underline underline-offset-4 decoration-gray-300"
             >
-              No thanks, I'll stick with my 3 courses →
+              No thanks, I'll stick with my 4 courses →
             </button>
 
             {/* Refunds Badge */}
@@ -279,8 +282,8 @@ const OnetimePage: React.FC = () => {
                 <Check className="text-emerald-600" size={16} strokeWidth={3} />
               </div>
               <div>
-                <h5 className="font-bold text-gray-900 text-base">AutoCAD & Revit <span className="font-medium text-gray-500">— Drafting & BIM</span></h5>
-                <p className="text-sm text-gray-600 mt-1 leading-relaxed">Master the global standards. Draft perfect 2D floor plans in AutoCAD and build intelligent, auto-updating 3D structural models in Revit.</p>
+                <h5 className="font-bold text-gray-900 text-base">Revit BIM <span className="font-medium text-gray-500">— Building Information Modeling</span></h5>
+                <p className="text-sm text-gray-600 mt-1 leading-relaxed">Build intelligent, auto-updating 3D structural models in Revit — the global BIM standard for architecture firms.</p>
               </div>
             </div>
 
@@ -336,9 +339,9 @@ const OnetimePage: React.FC = () => {
             className="w-full py-4 text-white font-bold text-lg rounded-2xl flex items-center justify-center gap-3 active:scale-[0.98] btn-pulse"
             style={{ background: 'linear-gradient(135deg,#f97316,#ea580c)' }}
           >
-            <span className="text-lg">🇳🇬</span>
+            <span className="text-lg">{country.flag}</span>
             <Gift size={20} />
-            Yes! Unlock All 9 Courses — ₦37,000
+            Yes! Unlock All 8 Courses — {country.formattedUpsellPrice}
             <ArrowRight size={20} />
           </button>
 
@@ -346,7 +349,7 @@ const OnetimePage: React.FC = () => {
             onClick={() => setIsConfirmingSkip(true)}
             className="block w-full mt-4 py-3 text-center text-gray-500 hover:text-gray-700 text-sm font-medium transition-colors underline underline-offset-4 decoration-gray-300"
           >
-            No thanks, I'll stick with my 3 courses →
+            No thanks, I'll stick with my 4 courses →
           </button>
         </div>
       </div>
@@ -358,7 +361,7 @@ const OnetimePage: React.FC = () => {
             <button onClick={() => setShowPayment(false)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><X size={20}/></button>
             <div className="flex items-center justify-between mb-4 mt-2">
               <h3 className="text-lg font-bold text-gray-900">Complete Your Upgrade</h3>
-              <div className="bg-orange-100 text-orange-600 text-xs font-bold px-3 py-1 rounded-full">₦37,000</div>
+              <div className="bg-orange-100 text-orange-600 text-xs font-bold px-3 py-1 rounded-full">{country.formattedUpsellPrice}</div>
             </div>
             <label className="block text-sm font-bold text-gray-900 mb-1.5">Full Name</label>
             <div className="relative mb-3">
@@ -389,8 +392,8 @@ const OnetimePage: React.FC = () => {
               onClick={handleSelarCheckout}
               className="w-full py-4 bg-green-600 hover:bg-green-700 rounded-xl flex items-center justify-center gap-2.5 transition-all"
             >
-              <span className="text-white text-lg">🇳🇬</span>
-              <span className="text-white font-bold text-base">Pay ₦37,000 · Get Instant Access</span>
+              <span className="text-white text-lg">{country.flag}</span>
+              <span className="text-white font-bold text-base">Pay {country.formattedUpsellPrice} · Get Instant Access</span>
             </button>
           </div>
         </div>
@@ -402,7 +405,7 @@ const OnetimePage: React.FC = () => {
             <button onClick={() => setIsConfirmingSkip(false)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><X size={20}/></button>
             <h4 className="text-red-700 font-bold text-2xl mb-2 mt-4">Are you sure?</h4>
             <p className="text-gray-700 text-base mb-6">
-              This 85% discount will not be available again. You can still buy this later, but it will be at the full regular price (₦99,000).
+              This {upsellDiscount}% discount will not be available again. You can still buy this later, but it will be at the full regular price ({country.formattedUpsellOriginalPrice}).
             </p>
             <div className="space-y-3">
               <button
