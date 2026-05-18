@@ -139,15 +139,15 @@ const LandingPage: React.FC = () => {
               </p>
 
               {/* Main headline */}
-              <h1 className="mb-3 md:mb-4">
+              <h1 className="mb-1 md:mb-4">
                 <span className="block text-[1.75rem] leading-[1.2] md:text-[2.75rem] md:leading-[1.15] font-display font-extrabold text-slate-900 tracking-tight">
                   Design Complete
                 </span>
-                <span className="block text-[1.75rem] leading-[1.2] md:text-[2.75rem] md:leading-[1.15] font-display font-extrabold text-orange-500 tracking-tight mt-1">
+                <span className="block text-[1.75rem] leading-[1.2] md:text-[2.75rem] md:leading-[1.15] font-display font-extrabold text-orange-500 tracking-tight">
                   Homes, Villas & Offices
                 </span>
               </h1>
-              <p className="text-[15px] md:text-[1.35rem] leading-relaxed font-bold italic text-slate-700 mb-8 md:mb-10 whitespace-nowrap">
+              <p className="text-[15px] md:text-[1.35rem] leading-relaxed font-bold italic text-slate-700 mb-5 md:mb-10 whitespace-nowrap">
                 and Start Earning as a Professional Designer.
               </p>
 
