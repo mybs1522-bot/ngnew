@@ -207,7 +207,7 @@ const LandingPage: React.FC = () => {
               {/* Students worldwide image */}
               <div className="w-full mt-6 mb-2">
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">50,000+ students worldwide</p>
-                <img src="/images/students-worldwide.jpg" alt="50,000+ students learning on Zoom — worldwide community" className="w-full rounded-2xl border border-slate-200 shadow-sm" />
+                <img src="https://lh3.googleusercontent.com/d/1U5Yisfd31i6-OFBRVorAjhO5O0S72JzG" alt="50,000+ students learning on Zoom — worldwide community" className="w-full rounded-2xl border border-slate-200 shadow-sm" />
               </div>
 
               {/* Social proof bar */}
