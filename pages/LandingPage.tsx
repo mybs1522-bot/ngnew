@@ -154,8 +154,8 @@ const LandingPage: React.FC = () => {
               {/* Pipeline note */}
               <div className="w-full max-w-lg mx-auto bg-slate-50/80 border border-slate-200/80 rounded-2xl px-5 py-4 mb-8 md:mb-10">
                 <p className="text-[11px] md:text-xs font-semibold text-slate-500 uppercase tracking-[0.15em] mb-2">We teach you</p>
-                <p className="text-[13px] md:text-[15px] text-slate-700 leading-[1.7] tracking-wide">
-                  <strong className="text-slate-900 font-bold">Planning</strong> on AutoCAD, <strong className="text-slate-900 font-bold">Designing</strong> on SketchUp and <strong className="text-slate-900 font-bold">Rendering</strong> on V-Ray and D5 + AI
+                <p className="text-[12px] md:text-[15px] text-slate-700 leading-[1.7]">
+                  <strong className="text-slate-900 font-bold">Planning</strong> on AutoCAD, <strong className="text-slate-900 font-bold">Designing</strong> on SketchUp<br className="md:hidden" />and <strong className="text-slate-900 font-bold">Rendering</strong> on V-Ray and D5 + AI
                 </p>
               </div>
 
