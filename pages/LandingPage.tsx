@@ -116,126 +116,114 @@ const LandingPage: React.FC = () => {
 
       <main>
         {/* 1. HERO — The Primary Pitch */}
-        <section className="relative pt-0 pb-6 md:pb-16 overflow-hidden" style={{ background: '#ffffff' }}>
-          <div className="w-full px-4 md:max-w-3xl md:mx-auto relative z-10">
-            <div className="flex flex-col items-center text-center pt-7 md:pt-14">
+        <section className="relative pb-10 md:pb-20 overflow-hidden bg-white">
+          <div className="max-w-2xl mx-auto px-5 md:px-6">
+            <div className="flex flex-col items-center text-center pt-10 md:pt-20">
 
               {/* Badge */}
-              <div className="mb-4 inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 border border-orange-300 rounded-full shadow-sm">
-                <Sparkles size={12} className="text-orange-500" />
-                <span className="text-[11px] md:text-xs font-bold text-orange-700 uppercase tracking-widest">For Architects & Interior Designers</span>
+              <div className="mb-6 md:mb-8 inline-flex items-center gap-2 px-5 py-2 bg-orange-50/80 border border-orange-200 rounded-full">
+                <Sparkles size={13} className="text-orange-400" />
+                <span className="text-[11px] md:text-xs font-semibold text-orange-600 uppercase tracking-[0.15em]">For Architects & Interior Designers</span>
               </div>
 
-              {/* Headline */}
-              <h1 className="tracking-tight mb-5 md:mb-6 w-full">
+              {/* Industry truth */}
+              <p className="text-[11px] md:text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-600 mb-5 md:mb-6 leading-relaxed">
+                <span className="text-orange-500 font-bold">In Architecture & Design</span>
+                {' — '}
+                <span className="text-slate-800 font-bold">Planning</span>
+                {', '}
+                <span className="text-slate-800 font-bold">Design</span>
+                {' & '}
+                <span className="text-slate-800 font-bold">Rendering</span>
+                {' matter the most.'}
+              </p>
 
-                {/* Industry truth */}
-                <span className="block text-[11px] md:text-xs font-bold uppercase tracking-[0.2em] mb-3">
-                  <span className="text-orange-500">In Architecture & Design</span>
-                  <span className="text-slate-400"> — </span>
-                  <span className="text-slate-700">Planning</span>
-                  <span className="text-slate-400">, </span>
-                  <span className="text-slate-700">Design</span>
-                  <span className="text-slate-400"> & </span>
-                  <span className="text-slate-700">Rendering</span>
-                  <span className="text-slate-400"> matter the most.</span>
+              {/* Main headline */}
+              <h1 className="mb-3 md:mb-4">
+                <span className="block text-[1.75rem] leading-[1.2] md:text-[2.75rem] md:leading-[1.15] font-display font-extrabold text-slate-900 tracking-tight">
+                  Design Complete
                 </span>
-
-                {/* Main headline — earning & career focused */}
-                <span className="block text-2xl leading-snug md:text-[2.6rem] md:leading-tight font-display font-black text-slate-900 mb-2">
-                  Design Complete{' '}
-                  <span className="text-orange-500">Homes, Villas & Offices</span>
+                <span className="block text-[1.75rem] leading-[1.2] md:text-[2.75rem] md:leading-[1.15] font-display font-extrabold text-orange-500 tracking-tight mt-1">
+                  Homes, Villas & Offices
                 </span>
-                <span className="block text-xl leading-snug md:text-3xl font-display font-black text-slate-700 mb-6">
-                  and Start Earning as a Professional Designer.
-                </span>
-
-                {/* Pipeline intro */}
-                <span className="block text-sm md:text-base font-bold text-slate-500 uppercase tracking-widest mb-3">We teach you</span>
-
-                {/* Pipeline cards */}
-                <div className="w-full grid grid-cols-3 gap-3 mb-8">
-                  <div className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-5 text-center">
-                    <p className="text-orange-500 text-[10px] md:text-xs font-black uppercase tracking-widest mb-1">Planning</p>
-                    <p className="text-slate-900 text-lg md:text-xl font-display font-black">AutoCAD</p>
-                    <p className="text-slate-400 text-[11px] md:text-xs mt-0.5 italic">2D Floor Plans</p>
-                  </div>
-                  <div className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-5 text-center">
-                    <p className="text-orange-500 text-[10px] md:text-xs font-black uppercase tracking-widest mb-1">Designing</p>
-                    <p className="text-slate-900 text-lg md:text-xl font-display font-black">SketchUp</p>
-                    <p className="text-slate-400 text-[11px] md:text-xs mt-0.5 italic">3D Modeling</p>
-                  </div>
-                  <div className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-5 text-center">
-                    <p className="text-orange-500 text-[10px] md:text-xs font-black uppercase tracking-widest mb-1">Rendering</p>
-                    <p className="text-slate-900 text-lg md:text-xl font-display font-black">V-Ray & D5</p>
-                    <p className="text-slate-400 text-[11px] md:text-xs mt-0.5 italic">Photorealistic Visuals</p>
-                  </div>
-                </div>
-
-                {/* Career hook */}
-                <span className="block text-xl leading-snug md:text-2xl font-display font-black text-slate-900 mb-1">
-                  Designers who can deliver complete projects — from blueprint to final visual — earn 3x more.
-                </span>
-                <span className="block text-lg leading-snug md:text-xl font-display font-black text-orange-500 mb-6">
-                  We teach you that entire pipeline in 15 days.
-                </span>
-
               </h1>
+              <p className="text-[15px] md:text-[1.35rem] leading-relaxed font-bold italic text-slate-700 mb-8 md:mb-10 whitespace-nowrap">
+                and Start Earning as a Professional Designer.
+              </p>
 
-              {/* Hero Video — above CTA */}
-              <div className="w-full mb-6 overflow-hidden rounded-2xl shadow-2xl border border-slate-100" style={{ position: 'relative', paddingTop: '56.25%' }}>
+              {/* Pipeline note */}
+              <div className="w-full max-w-lg mx-auto bg-slate-50/80 border border-slate-200/80 rounded-2xl px-5 py-4 mb-8 md:mb-10">
+                <p className="text-[11px] md:text-xs font-semibold text-slate-500 uppercase tracking-[0.15em] mb-2">We teach you</p>
+                <p className="text-[13px] md:text-[15px] text-slate-700 leading-[1.7] tracking-wide">
+                  <strong className="text-slate-900 font-bold">Planning</strong> on AutoCAD, <strong className="text-slate-900 font-bold">Designing</strong> on SketchUp and <strong className="text-slate-900 font-bold">Rendering</strong> on V-Ray and D5 + AI
+                </p>
+              </div>
+
+              {/* Hero Video */}
+              <div className="w-full mb-10 md:mb-12 overflow-hidden rounded-2xl shadow-lg border border-slate-100" style={{ position: 'relative', paddingTop: '56.25%' }}>
                 <iframe src="https://iframe.mediadelivery.net/embed/489113/a214b199-e64a-4eaf-af70-edfbc586e5fd?autoplay=true&loop=true&muted=true&preload=true&responsive=true" loading="lazy" style={{ border: 0, position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowFullScreen={true} />
               </div>
 
+              {/* Career hook */}
+              <div className="max-w-lg mx-auto mb-10 md:mb-12">
+                <p className="text-xl leading-[1.45] md:text-[1.55rem] md:leading-[1.4] font-bold text-slate-900 tracking-tight mb-3">
+                  Designers who can Plan, Design and Render make <span className="text-orange-500">10x money</span> in this industry <span className="italic text-orange-500">because</span> only they can deliver a project from start to finish.
+                </p>
+                <p className="text-base md:text-lg font-semibold text-orange-500 tracking-tight animate-pulse" style={{ animationDuration: '3s' }}>
+                  We teach you that entire pipeline in 15 days.
+                </p>
+              </div>
+
               {/* Zero-knowledge note */}
-              <div className="w-full mb-5 flex items-start gap-3 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 text-left">
-                <span className="text-xl shrink-0 mt-0.5">💻</span>
+              <div className="w-full max-w-lg mx-auto mb-8 md:mb-10 flex items-start gap-4 bg-slate-50/70 border border-slate-200/70 rounded-2xl px-5 py-5 text-left">
+                <span className="text-2xl shrink-0 mt-0.5">💻</span>
                 <div>
-                  <p className="text-sm font-black text-slate-900 mb-0.5">No prior knowledge needed. Zero.</p>
-                  <p className="text-xs md:text-sm text-slate-500 leading-relaxed">
-                    Never designed a home before? That's totally fine — we start from scratch. All you need is a <strong className="text-slate-700">laptop or PC</strong> and we'll take care of the rest.
+                  <p className="text-[15px] font-bold text-slate-900 mb-1 tracking-tight">No prior knowledge needed. Zero.</p>
+                  <p className="text-[13px] md:text-sm text-slate-600 leading-[1.7]">
+                    Never designed a home before? That's totally fine — we start from scratch. All you need is a <strong className="text-slate-700 font-semibold">laptop or PC</strong> and we'll take care of the rest.
                   </p>
                 </div>
               </div>
 
               {/* CTA */}
-              <button onClick={openPaymentModal} className="w-full md:w-auto px-10 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-2xl font-bold text-lg md:text-xl shadow-xl shadow-orange-500/20 hover:shadow-orange-500/30 hover:scale-[1.03] transition-all flex items-center justify-center gap-3 group premium-stroke">
-                Enroll Now — {country.formattedPrice} <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
+              <button onClick={openPaymentModal} className="w-full md:w-auto px-12 py-[18px] bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-bold text-lg md:text-xl shadow-lg shadow-orange-500/15 hover:shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-3 group">
+                Enroll Now — {country.formattedPrice} <ArrowRight className="group-hover:translate-x-1 transition-transform duration-200" size={20} />
               </button>
-              <p className="text-[11px] md:text-xs text-slate-400 mt-3 font-medium">Instant access · Lifetime updates · No prior knowledge needed</p>
+              <p className="text-[12px] text-slate-500 mt-4 font-medium tracking-wide">Instant access · Lifetime updates · No prior knowledge needed</p>
 
               {/* Students worldwide image */}
-              <div className="w-full mt-6 mb-2">
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">50,000+ students worldwide</p>
-                <img src="https://lh3.googleusercontent.com/d/1U5Yisfd31i6-OFBRVorAjhO5O0S72JzG" alt="50,000+ students learning on Zoom — worldwide community" className="w-full rounded-2xl border border-slate-200 shadow-sm" />
+              <div className="w-full mt-10 md:mt-12 mb-3">
+                <p className="text-[11px] md:text-xs font-semibold text-slate-600 uppercase tracking-[0.15em] mb-4">50,000+ students worldwide</p>
+                <img src="https://lh3.googleusercontent.com/d/1U5Yisfd31i6-OFBRVorAjhO5O0S72JzG" alt="50,000+ students learning on Zoom — worldwide community" className="w-full rounded-2xl border border-slate-100 shadow-sm" />
               </div>
 
               {/* Social proof bar */}
-              <div className="w-full mt-5 flex flex-wrap items-center justify-center gap-2">
-                <span className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5 text-[11px] md:text-xs font-semibold text-slate-600">⭐ 4.9/5 from 50,000+ students</span>
-                <span className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5 text-[11px] md:text-xs font-semibold text-slate-600">🎓 Used by designers in 18+ countries</span>
-                <span className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5 text-[11px] md:text-xs font-semibold text-slate-600">✅ 7-day money-back guarantee</span>
+              <div className="w-full mt-6 flex flex-wrap items-center justify-center gap-2.5">
+                <span className="inline-flex items-center gap-1.5 bg-white border border-slate-200 rounded-full px-4 py-2 text-[12px] font-semibold text-slate-700 shadow-sm">⭐ 4.9/5 from 50,000+ students</span>
+                <span className="inline-flex items-center gap-1.5 bg-white border border-slate-200 rounded-full px-4 py-2 text-[12px] font-semibold text-slate-700 shadow-sm">🎓 Used by designers in 18+ countries</span>
+                <span className="inline-flex items-center gap-1.5 bg-white border border-slate-200 rounded-full px-4 py-2 text-[12px] font-semibold text-slate-700 shadow-sm">✅ 7-day money-back guarantee</span>
               </div>
 
-              {/* Outcome strip — career & earning focused */}
-              <div className="w-full mt-8 mb-4 flex gap-2">
-                <div className="flex-1 bg-amber-50 border border-amber-200 rounded-xl px-3 py-3 text-left">
-                  <p className="text-base font-black text-slate-900">� Start Earning Faster</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5">Design real projects & charge clients within weeks</p>
+              {/* Outcome strip */}
+              <div className="w-full mt-10 md:mt-12 mb-6 grid grid-cols-2 gap-3">
+                <div className="bg-white border border-slate-200 rounded-2xl px-4 py-4 text-left shadow-sm">
+                  <p className="text-[15px] font-bold text-slate-900 mb-1">💰 Start Earning Faster</p>
+                  <p className="text-[12px] text-slate-600 leading-relaxed">Design real projects & charge clients within weeks</p>
                 </div>
-                <div className="flex-1 bg-amber-50 border border-amber-200 rounded-xl px-3 py-3 text-left">
-                  <p className="text-base font-black text-slate-900">🏢 Design Full Projects</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5">Homes, villas, offices — from floor plan to final visual</p>
+                <div className="bg-white border border-slate-200 rounded-2xl px-4 py-4 text-left shadow-sm">
+                  <p className="text-[15px] font-bold text-slate-900 mb-1">🏢 Design Full Projects</p>
+                  <p className="text-[12px] text-slate-600 leading-relaxed">Homes, villas, offices — from floor plan to final visual</p>
                 </div>
               </div>
 
-              <div className="w-full mb-5 bg-orange-50 border border-orange-200 rounded-2xl px-4 py-4 text-left">
-                <p className="text-xs font-bold uppercase tracking-widest text-orange-500 mb-3">✨ Why This Bundle Is Different</p>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2 text-sm md:text-base font-semibold text-slate-800"><span className="text-orange-400 shrink-0">—</span> Learn to design complete homes, villas & offices end-to-end</li>
-                  <li className="flex items-start gap-2 text-sm md:text-base font-semibold text-slate-800"><span className="text-orange-400 shrink-0">—</span> 4 tools that form one seamless pipeline: Plan → Design → Render → Deliver</li>
-                  <li className="flex items-start gap-2 text-sm md:text-base font-semibold text-slate-800"><span className="text-orange-400 shrink-0">—</span> Start taking on paid projects even while you're still learning</li>
-                  <li className="flex items-start gap-2 text-sm md:text-base font-semibold text-slate-800"><span className="text-orange-400 shrink-0">—</span> Go from zero to your first paying client in 15 days</li>
+              {/* Why different */}
+              <div className="w-full mb-6 bg-orange-50/60 border border-orange-200/70 rounded-2xl px-5 py-5 text-left">
+                <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.15em] text-orange-500 mb-4">✨ Why This Bundle Is Different</p>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> Learn to design complete homes, villas & offices end-to-end</li>
+                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> 4 tools that form one seamless pipeline: Plan → Design → Render → Deliver</li>
+                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> Start taking on paid projects even while you're still learning</li>
+                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> Go from zero to your first paying client in 15 days</li>
                 </ul>
               </div>
 
