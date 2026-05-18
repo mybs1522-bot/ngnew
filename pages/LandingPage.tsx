@@ -147,8 +147,11 @@ const LandingPage: React.FC = () => {
                   Homes, Villas & Offices
                 </span>
               </h1>
-              <p className="text-[15px] md:text-[1.35rem] leading-relaxed font-bold italic text-slate-700 mb-5 md:mb-10 whitespace-nowrap">
-                and Start Earning as a Professional Designer. in Just 15 Days.
+              <p className="text-[15px] md:text-[1.35rem] leading-relaxed font-bold italic text-slate-700 mb-1 md:mb-2 whitespace-nowrap">
+                and Start Earning as a Professional Designer
+              </p>
+              <p className="mb-5 md:mb-10">
+                <span className="inline-block bg-orange-500 text-white font-bold text-[14px] md:text-lg px-4 py-1.5 rounded-lg">in Just 15 Days.</span>
               </p>
 
               {/* Pipeline note */}
