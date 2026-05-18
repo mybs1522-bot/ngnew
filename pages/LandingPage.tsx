@@ -121,9 +121,9 @@ const LandingPage: React.FC = () => {
             <div className="flex flex-col items-center text-center pt-10 md:pt-20">
 
               {/* Badge */}
-              <div className="mb-6 md:mb-8 inline-flex items-center gap-2 px-5 py-2 bg-orange-50/80 border border-orange-200 rounded-full">
-                <Sparkles size={13} className="text-orange-400" />
-                <span className="text-[11px] md:text-xs font-semibold text-orange-600 uppercase tracking-[0.15em]">For Architects & Interior Designers</span>
+              <div className="mb-6 md:mb-8 inline-flex items-center gap-2 px-5 py-2 bg-orange-50/80 border border-orange-200 rounded-full whitespace-nowrap">
+                <Sparkles size={13} className="text-orange-400 shrink-0" />
+                <span className="text-[10px] md:text-xs font-semibold text-orange-600 uppercase tracking-[0.15em]">For Architects & Interior Designers</span>
               </div>
 
               {/* Industry truth */}
