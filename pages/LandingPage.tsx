@@ -141,11 +141,17 @@ const LandingPage: React.FC = () => {
                   <span className="text-slate-400"> matter the most.</span>
                 </span>
 
-                {/* Pipeline headline */}
-                <span className="block text-xl md:text-3xl font-display font-black text-slate-900 mb-6">
-                  That's exactly why we teach you the{' '}
-                  <span className="text-orange-500">complete industry pipeline:</span>
+                {/* Main headline — earning & career focused */}
+                <span className="block text-2xl leading-snug md:text-[2.6rem] md:leading-tight font-display font-black text-slate-900 mb-2">
+                  Design Complete{' '}
+                  <span className="text-orange-500">Homes, Villas & Offices</span>
                 </span>
+                <span className="block text-xl leading-snug md:text-3xl font-display font-black text-slate-700 mb-6">
+                  and Start Earning as a Professional Designer.
+                </span>
+
+                {/* Pipeline intro */}
+                <span className="block text-sm md:text-base font-bold text-slate-500 uppercase tracking-widest mb-3">We teach you</span>
 
                 {/* Pipeline cards */}
                 <div className="w-full grid grid-cols-3 gap-3 mb-8">
@@ -166,39 +172,20 @@ const LandingPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Hook */}
-                <span className="block text-2xl leading-snug md:text-[2.6rem] font-display font-black text-slate-900 mb-1">
-                  The question isn't <em className="font-serif font-normal not-italic text-slate-500">if</em> you can.
+                {/* Career hook */}
+                <span className="block text-xl leading-snug md:text-2xl font-display font-black text-slate-900 mb-1">
+                  Designers who can deliver complete projects — from blueprint to final visual — earn 3x more.
                 </span>
-                <span className="block text-2xl leading-snug md:text-[2.6rem] font-display font-black text-slate-900 mb-6">
-                  It's —{' '}
-                  <span className="relative inline-block">
-                    <span className="text-orange-500">How to do it FASTER?</span>
-                    <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-orange-200 rounded-full"></span>
-                  </span>
-                </span>
-
-                {/* Divider */}
-                <span className="block w-10 h-[2px] bg-orange-300 rounded-full mx-auto mb-5"></span>
-
-                {/* Identity */}
-                <span className="block text-[1.65rem] leading-tight md:text-5xl font-display font-black text-slate-900 mb-1">
-                  If You Want to Design{' '}
-                  <span className="text-orange-500">Homes. Villas. Offices.</span>
-                </span>
-                <span className="block text-[1.5rem] leading-tight md:text-4xl font-display font-black text-slate-700 mb-4">
-                  Design Them in a Way<br />
-                  <span className="text-orange-500">the Industry Can't Ignore.</span>
-                </span>
-
-                {/* Consequence */}
-                <span className="block text-sm md:text-base text-slate-500 font-medium leading-relaxed max-w-lg mx-auto">
-                  Because that's the only way you can{' '}
-                  <strong className="text-slate-800">make money</strong> in this{' '}
-                  <strong className="text-orange-500">AI era.</strong>
+                <span className="block text-lg leading-snug md:text-xl font-display font-black text-orange-500 mb-6">
+                  We teach you that entire pipeline in 15 days.
                 </span>
 
               </h1>
+
+              {/* Hero Video — above CTA */}
+              <div className="w-full mb-6 overflow-hidden rounded-2xl shadow-2xl border border-slate-100" style={{ position: 'relative', paddingTop: '56.25%' }}>
+                <iframe src="https://iframe.mediadelivery.net/embed/489113/a214b199-e64a-4eaf-af70-edfbc586e5fd?autoplay=true&loop=true&muted=true&preload=true&responsive=true" loading="lazy" style={{ border: 0, position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowFullScreen={true} />
+              </div>
 
               {/* Zero-knowledge note */}
               <div className="w-full mb-5 flex items-start gap-3 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 text-left">
@@ -206,56 +193,51 @@ const LandingPage: React.FC = () => {
                 <div>
                   <p className="text-sm font-black text-slate-900 mb-0.5">No prior knowledge needed. Zero.</p>
                   <p className="text-xs md:text-sm text-slate-500 leading-relaxed">
-                    Never opened SketchUp? Never rendered anything? That's totally fine — we start from scratch. All you need is a <strong className="text-slate-700">laptop or PC</strong> and we'll take care of the rest.
+                    Never designed a home before? That's totally fine — we start from scratch. All you need is a <strong className="text-slate-700">laptop or PC</strong> and we'll take care of the rest.
                   </p>
                 </div>
               </div>
 
-              {/* Hero Video */}
-              <div className="w-full mb-5 overflow-hidden rounded-2xl shadow-2xl border border-slate-100" style={{ position: 'relative', paddingTop: '56.25%' }}>
-                <iframe src="https://iframe.mediadelivery.net/embed/489113/a214b199-e64a-4eaf-af70-edfbc586e5fd?autoplay=true&loop=true&muted=true&preload=true&responsive=true" loading="lazy" style={{ border: 0, position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowFullScreen={true} />
+              {/* CTA */}
+              <button onClick={openPaymentModal} className="w-full md:w-auto px-10 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-2xl font-bold text-lg md:text-xl shadow-xl shadow-orange-500/20 hover:shadow-orange-500/30 hover:scale-[1.03] transition-all flex items-center justify-center gap-3 group premium-stroke">
+                Enroll Now — {country.formattedPrice} <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
+              </button>
+              <p className="text-[11px] md:text-xs text-slate-400 mt-3 font-medium">Instant access · Lifetime updates · No prior knowledge needed</p>
+
+              {/* Students worldwide image */}
+              <div className="w-full mt-6 mb-2">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">50,000+ students worldwide</p>
+                <img src="/images/students-worldwide.jpg" alt="50,000+ students learning on Zoom — worldwide community" className="w-full rounded-2xl border border-slate-200 shadow-sm" />
               </div>
 
-              {/* Post-video hook */}
-              <div className="w-full mb-6 text-center">
-                <p className="text-xl md:text-3xl font-display font-black text-slate-900 leading-tight">
-                  Design like Top Designers in{' '}
-                  <span className="relative inline-block">
-                    <span className="text-orange-500">15 Days.</span>
-                    <span className="absolute -bottom-0.5 left-0 w-full h-[3px] bg-orange-300 rounded-full opacity-70"></span>
-                  </span>
-                </p>
-                <p className="text-sm md:text-base font-bold text-slate-400 uppercase tracking-widest mt-1">No Bullshit.</p>
+              {/* Social proof bar */}
+              <div className="w-full mt-5 flex flex-wrap items-center justify-center gap-2">
+                <span className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5 text-[11px] md:text-xs font-semibold text-slate-600">⭐ 4.9/5 from 50,000+ students</span>
+                <span className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5 text-[11px] md:text-xs font-semibold text-slate-600">🎓 Used by designers in 18+ countries</span>
+                <span className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5 text-[11px] md:text-xs font-semibold text-slate-600">✅ 7-day money-back guarantee</span>
               </div>
 
-              {/* Outcome strip */}
-              <div className="w-full mb-4 flex gap-2">
+              {/* Outcome strip — career & earning focused */}
+              <div className="w-full mt-8 mb-4 flex gap-2">
                 <div className="flex-1 bg-amber-50 border border-amber-200 rounded-xl px-3 py-3 text-left">
-                  <p className="text-base font-black text-slate-900">💼 Land Higher-Paying Jobs</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5">Firms pay premium for rendering skills</p>
+                  <p className="text-base font-black text-slate-900">� Start Earning Faster</p>
+                  <p className="text-[11px] text-slate-500 mt-0.5">Design real projects & charge clients within weeks</p>
                 </div>
                 <div className="flex-1 bg-amber-50 border border-amber-200 rounded-xl px-3 py-3 text-left">
-                  <p className="text-base font-black text-slate-900">🏢 Start Your Own Studio</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5">Full pipeline for freelance & studio work</p>
+                  <p className="text-base font-black text-slate-900">🏢 Design Full Projects</p>
+                  <p className="text-[11px] text-slate-500 mt-0.5">Homes, villas, offices — from floor plan to final visual</p>
                 </div>
               </div>
 
               <div className="w-full mb-5 bg-orange-50 border border-orange-200 rounded-2xl px-4 py-4 text-left">
                 <p className="text-xs font-bold uppercase tracking-widest text-orange-500 mb-3">✨ Why This Bundle Is Different</p>
                 <ul className="space-y-2">
-                  <li className="flex items-start gap-2 text-sm md:text-base font-semibold text-slate-800"><span className="text-orange-400 shrink-0">—</span> Zero prior knowledge needed — we start from absolute scratch</li>
-                  <li className="flex items-start gap-2 text-sm md:text-base font-semibold text-slate-800"><span className="text-orange-400 shrink-0">—</span> 4 courses that form one seamless pipeline: Plan → Design → Render → Deliver</li>
-                  <li className="flex items-start gap-2 text-sm md:text-base font-semibold text-slate-800"><span className="text-orange-400 shrink-0">—</span> AI does the heavy lifting — you focus on creativity, not tech headaches</li>
-                  <li className="flex items-start gap-2 text-sm md:text-base font-semibold text-slate-800"><span className="text-orange-400 shrink-0">—</span> Go from zero to client-ready renders in just 15 days</li>
+                  <li className="flex items-start gap-2 text-sm md:text-base font-semibold text-slate-800"><span className="text-orange-400 shrink-0">—</span> Learn to design complete homes, villas & offices end-to-end</li>
+                  <li className="flex items-start gap-2 text-sm md:text-base font-semibold text-slate-800"><span className="text-orange-400 shrink-0">—</span> 4 tools that form one seamless pipeline: Plan → Design → Render → Deliver</li>
+                  <li className="flex items-start gap-2 text-sm md:text-base font-semibold text-slate-800"><span className="text-orange-400 shrink-0">—</span> Start taking on paid projects even while you're still learning</li>
+                  <li className="flex items-start gap-2 text-sm md:text-base font-semibold text-slate-800"><span className="text-orange-400 shrink-0">—</span> Go from zero to your first paying client in 15 days</li>
                 </ul>
               </div>
-
-              {/* CTA */}
-              <button onClick={openPaymentModal} className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-2xl font-bold text-base md:text-lg shadow-xl shadow-orange-500/20 hover:shadow-orange-500/30 hover:scale-[1.03] transition-all flex items-center justify-center gap-3 group premium-stroke">
-                <Download size={18} className="shrink-0" />
-                Get All 4 Courses — {country.formattedPrice} <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
-              </button>
-              <p className="text-[11px] md:text-xs text-slate-400 mt-3 font-medium">24/7 Support • Free AI Software • 7-Day Money-Back Guarantee</p>
 
             </div>
           </div>
