@@ -182,13 +182,23 @@ const LandingPage: React.FC = () => {
               </div>
 
               {/* Career hook */}
-              <div className="max-w-lg mx-auto mb-10 md:mb-12">
-                <p className="text-[18px] leading-[1.5] md:text-[1.55rem] md:leading-[1.4] font-bold text-slate-900 tracking-tight mb-3">
-                  If you can Plan, Design and Render you can make <span className="text-orange-500">10x money</span> in this industry <span className="italic text-orange-500">because</span> only you deliver a project from start to finish.
+              <div className="max-w-lg mx-auto mb-10 md:mb-12 text-center">
+                <p className="text-xl leading-[1.4] md:text-[1.6rem] md:leading-[1.35] font-bold text-slate-900 tracking-tight mb-1">
+                  Design like Top Designers in <span className="text-orange-500 underline underline-offset-4 italic">15 Days.</span>
                 </p>
-                <p className="text-base md:text-lg font-semibold text-orange-500 tracking-tight animate-pulse" style={{ animationDuration: '3s' }}>
-                  We teach you that entire pipeline in 15 days.
+                <p className="text-sm md:text-base font-semibold text-slate-400 uppercase tracking-widest mb-6">
+                  No Bullshit.
                 </p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-left">
+                    <p className="text-[14px] md:text-[15px] font-bold text-slate-900 mb-0.5">💼 Land Higher-Paying Jobs</p>
+                    <p className="text-[11px] md:text-xs text-slate-500">Firms pay premium for rendering skills</p>
+                  </div>
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-left">
+                    <p className="text-[14px] md:text-[15px] font-bold text-slate-900 mb-0.5">🏢 Start Your Own Studio</p>
+                    <p className="text-[11px] md:text-xs text-slate-500">Full pipeline for freelance & studio work</p>
+                  </div>
+                </div>
               </div>
 
               {/* Zero-knowledge note */}
