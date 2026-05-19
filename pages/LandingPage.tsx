@@ -139,14 +139,35 @@ const LandingPage: React.FC = () => {
               </p>
 
               {/* Main headline */}
-              <h1 className="mb-1 md:mb-4">
-                <span className="block text-[1.75rem] leading-[1.2] md:text-[2.75rem] md:leading-[1.15] font-display font-extrabold text-slate-900 tracking-tight">
-                  You Will Design Complete
-                </span>
-                <span className="block text-[1.75rem] leading-[1.2] md:text-[2.75rem] md:leading-[1.15] font-display font-extrabold text-orange-500 tracking-tight">
-                  Homes, Villas & Offices
+              <h1 className="mb-3 md:mb-4">
+                <span className="block text-[1.4rem] leading-[1.25] md:text-[2.75rem] md:leading-[1.15] font-display font-extrabold text-slate-900 tracking-tight whitespace-nowrap">
+                  We Will Teach You to Design Complete
                 </span>
               </h1>
+
+              {/* Category items with images */}
+              <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-3 md:mb-5">
+                <div className="flex items-center gap-1.5">
+                  <img src="https://archicgi.com/wp-content/uploads/2025/01/bedroom-design-3d-render-vancouver.jpg" alt="Bedroom" className="w-9 h-9 md:w-11 md:h-11 rounded-full object-cover border-2 border-orange-200" />
+                  <span className="text-[13px] md:text-base font-bold text-slate-800">Bedroom</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVxhTeQpiWXZ5sqNSpfTLtZgqfVLCg8DxWZg&s" alt="Kitchen" className="w-9 h-9 md:w-11 md:h-11 rounded-full object-cover border-2 border-orange-200" />
+                  <span className="text-[13px] md:text-base font-bold text-slate-800">Kitchen</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <img src="https://t4.ftcdn.net/jpg/05/39/76/47/360_F_539764753_ssmO3LitGNsiX5X1c14XWp2qYxNhgAGo.jpg" alt="Washroom" className="w-9 h-9 md:w-11 md:h-11 rounded-full object-cover border-2 border-orange-200" />
+                  <span className="text-[13px] md:text-base font-bold text-slate-800">Washrooms</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <img src="https://mirchidevelopers.com/wp-content/uploads/2025/09/1.webp" alt="Villa" className="w-9 h-9 md:w-11 md:h-11 rounded-full object-cover border-2 border-orange-200" />
+                  <span className="text-[13px] md:text-base font-bold text-slate-800">Villas</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <img src="https://render-vision.com/wp-content/uploads/2024/09/3D-Visualisierung_Buro_final-1920x1280.jpg.webp" alt="Office" className="w-9 h-9 md:w-11 md:h-11 rounded-full object-cover border-2 border-orange-200" />
+                  <span className="text-[13px] md:text-base font-bold text-slate-800">Offices</span>
+                </div>
+              </div>
               <p className="text-[15px] md:text-[1.35rem] leading-relaxed font-bold italic text-slate-700 mb-1 md:mb-2 whitespace-nowrap">
                 and Start Earning as a Professional Designer
               </p>
@@ -207,29 +228,6 @@ const LandingPage: React.FC = () => {
                 <span className="inline-flex items-center gap-1.5 bg-white border border-slate-200 rounded-full px-4 py-2 text-[12px] font-semibold text-slate-700 shadow-sm">✅ 7-day money-back guarantee</span>
               </div>
 
-              {/* Outcome strip */}
-              <div className="w-full mt-10 md:mt-12 mb-6 grid grid-cols-2 gap-3">
-                <div className="bg-white border border-slate-200 rounded-2xl px-4 py-4 text-left shadow-sm">
-                  <p className="text-[15px] font-bold text-slate-900 mb-1">💰 Start Earning Faster</p>
-                  <p className="text-[12px] text-slate-600 leading-relaxed">Design real projects & charge clients within weeks</p>
-                </div>
-                <div className="bg-white border border-slate-200 rounded-2xl px-4 py-4 text-left shadow-sm">
-                  <p className="text-[15px] font-bold text-slate-900 mb-1">🏢 Design Full Projects</p>
-                  <p className="text-[12px] text-slate-600 leading-relaxed">Homes, villas, offices — from floor plan to final visual</p>
-                </div>
-              </div>
-
-              {/* Why different */}
-              <div className="w-full mb-6 bg-orange-50/60 border border-orange-200/70 rounded-2xl px-5 py-5 text-left">
-                <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.15em] text-orange-500 mb-4">✨ Why This Bundle Is Different</p>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> Learn to design complete homes, villas & offices end-to-end</li>
-                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> 4 tools that form one seamless pipeline: Plan → Design → Render → Deliver</li>
-                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> Start taking on paid projects even while you're still learning</li>
-                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> Go from zero to your first paying client in 15 days</li>
-                </ul>
-              </div>
-
             </div>
           </div>
         </section>
@@ -274,6 +272,34 @@ const LandingPage: React.FC = () => {
            </div>
         </section>
 
+
+        {/* ═══════ Outcome & Why Different — After Courses ═══════ */}
+        <section className="py-10 md:py-14 bg-white">
+          <div className="max-w-2xl mx-auto px-5">
+              {/* Outcome strip */}
+              <div className="w-full mb-8 grid grid-cols-2 gap-3">
+                <div className="bg-white border border-slate-200 rounded-2xl px-4 py-4 text-left shadow-sm">
+                  <p className="text-[15px] font-bold text-slate-900 mb-1">💰 Start Earning Faster</p>
+                  <p className="text-[12px] text-slate-600 leading-relaxed">Design real projects & charge clients within weeks</p>
+                </div>
+                <div className="bg-white border border-slate-200 rounded-2xl px-4 py-4 text-left shadow-sm">
+                  <p className="text-[15px] font-bold text-slate-900 mb-1">🏢 Design Full Projects</p>
+                  <p className="text-[12px] text-slate-600 leading-relaxed">Homes, villas, offices — from floor plan to final visual</p>
+                </div>
+              </div>
+
+              {/* Why different */}
+              <div className="w-full bg-orange-50/60 border border-orange-200/70 rounded-2xl px-5 py-5 text-left">
+                <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.15em] text-orange-500 mb-4">✨ Why This Bundle Is Different</p>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> Learn to design complete homes, villas & offices end-to-end</li>
+                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> 4 tools that form one seamless pipeline: Plan → Design → Render → Deliver</li>
+                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> Start taking on paid projects even while you're still learning</li>
+                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> Go from zero to your first paying client in 15 days</li>
+                </ul>
+              </div>
+          </div>
+        </section>
 
 
         {/* ═══════ CTA #1 — After Course Showcase ═══════ */}
