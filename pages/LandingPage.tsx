@@ -123,25 +123,18 @@ const LandingPage: React.FC = () => {
               {/* Badge */}
               <div className="mb-6 md:mb-8 inline-flex items-center gap-2 px-5 py-2 bg-orange-50/80 border border-orange-200 rounded-full whitespace-nowrap">
                 <Sparkles size={13} className="text-orange-400 shrink-0" />
-                <span className="text-[10px] md:text-xs font-semibold text-orange-600 uppercase tracking-[0.15em]">For Architects & Interior Designers</span>
+                <span className="text-[10px] md:text-xs font-semibold text-orange-600 uppercase tracking-[0.15em]">Hello, Interior Designers and Architects</span>
               </div>
 
               {/* Industry truth */}
-              <p className="text-[11px] md:text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-600 mb-5 md:mb-6 leading-relaxed">
-                <span className="text-orange-500 font-bold">In Architecture & Design</span>
-                {' — '}
-                <span className="text-slate-800 font-bold">Planning</span>
-                {', '}
-                <span className="text-slate-800 font-bold">Design</span>
-                {' & '}
-                <span className="text-slate-800 font-bold">Rendering</span>
-                {' matter the most.'}
+              <p className="w-full text-[10px] md:text-[13px] font-semibold uppercase tracking-[0.14em] text-slate-600 mb-5 md:mb-6 leading-[1.9]">
+                In our business of Architecture and Design, <span className="text-orange-500 font-bold">Planning, Design and Rendering</span> matter the most.
               </p>
 
               {/* Main headline */}
               <h1 className="mb-3 md:mb-4">
                 <span className="block text-[1.4rem] leading-[1.25] md:text-[2.75rem] md:leading-[1.15] font-display font-extrabold text-slate-900 tracking-tight whitespace-nowrap">
-                  We Will Teach You to Design Complete
+                  We Will Teach You to Create Complete
                 </span>
               </h1>
 
@@ -168,30 +161,30 @@ const LandingPage: React.FC = () => {
                   <span className="text-[13px] md:text-base font-bold text-slate-800">Offices</span>
                 </div>
               </div>
-              <p className="text-[15px] md:text-[1.35rem] leading-relaxed font-bold italic text-slate-700 mb-1 md:mb-2 whitespace-nowrap">
-                and Start Earning as a Professional Designer
+              <p className="text-[15px] md:text-[1.35rem] leading-relaxed font-semibold text-slate-600 mb-1 md:mb-2 whitespace-nowrap">
+                So You can Start Earning as a Professional Designer
               </p>
               <p className="mb-5 md:mb-10">
-                <span className="inline-block bg-orange-500 text-white font-bold text-[14px] md:text-lg px-4 py-1.5 rounded-lg">in Just 15 Days.</span>
+                <span className="inline-block bg-orange-500 text-white font-bold text-[14px] md:text-lg px-4 py-1.5 rounded-lg">in Just 15 days</span>
               </p>
 
               {/* Pipeline note */}
               <div className="w-full max-w-lg mx-auto bg-slate-50/80 border border-slate-200/80 rounded-2xl px-5 py-4 mb-8 md:mb-10">
                 <p className="text-[11px] md:text-xs font-semibold text-slate-500 uppercase tracking-[0.15em] mb-2">We teach you</p>
-                <p className="text-[12px] md:text-[15px] text-slate-700 leading-[1.7]">
+                <p className="text-[14px] md:text-[16px] text-slate-700 leading-[1.7]">
                   <strong className="text-slate-900 font-bold">Planning</strong> on AutoCAD, <strong className="text-slate-900 font-bold">Designing</strong> on SketchUp<br className="md:hidden" />and <strong className="text-slate-900 font-bold">Rendering</strong> on V-Ray and D5 + AI
                 </p>
               </div>
 
               {/* Hero Video */}
               <div className="w-full mb-10 md:mb-12 overflow-hidden rounded-2xl shadow-lg border border-slate-100" style={{ position: 'relative', paddingTop: '56.25%' }}>
-                <iframe src="https://iframe.mediadelivery.net/embed/489113/a214b199-e64a-4eaf-af70-edfbc586e5fd?autoplay=true&loop=true&muted=true&preload=true&responsive=true" loading="lazy" style={{ border: 0, position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowFullScreen={true} />
+                <iframe src="https://iframe.mediadelivery.net/embed/489113/a4460094-5648-498d-8d29-6e63aa1feb91?autoplay=true&loop=true&muted=true&preload=true&responsive=true" loading="lazy" style={{ border: 0, position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen;" allowFullScreen={true} />
               </div>
 
               {/* Career hook */}
               <div className="max-w-lg mx-auto mb-10 md:mb-12">
-                <p className="text-xl leading-[1.45] md:text-[1.55rem] md:leading-[1.4] font-bold text-slate-900 tracking-tight mb-3">
-                  Designers who can Plan, Design and Render make <span className="text-orange-500">10x money</span> in this industry <span className="italic text-orange-500">because</span> only they can deliver a project from start to finish.
+                <p className="text-[18px] leading-[1.5] md:text-[1.55rem] md:leading-[1.4] font-bold text-slate-900 tracking-tight mb-3">
+                  If you can Plan, Design and Render you can make <span className="text-orange-500">10x money</span> in this industry <span className="italic text-orange-500">because</span> only you deliver a project from start to finish.
                 </p>
                 <p className="text-base md:text-lg font-semibold text-orange-500 tracking-tight animate-pulse" style={{ animationDuration: '3s' }}>
                   We teach you that entire pipeline in 15 days.
