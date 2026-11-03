@@ -65,7 +65,7 @@ const CtaWithTimer = ({
           <div className="flex items-center gap-1.5 min-w-0">
             <span className="size-2 rounded-full bg-red-500 animate-pulse shrink-0" />
             <span className="font-heading font-bold text-[11px] sm:text-xs truncate">
-              Special Offer • Ends {getSameDayDate()}
+              Students Week Offer • Ends {getSameDayDate()}
             </span>
           </div>
 
@@ -755,7 +755,7 @@ const LandingPage: React.FC = () => {
             </div>
             <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-zinc-600 font-medium truncate mt-0.5">
               <span className="size-1.5 rounded-full bg-red-500 animate-pulse shrink-0" />
-              <span className="font-bold text-red-700">Special Offer</span>
+              <span className="font-bold text-red-700">Students Week Offer</span>
               <span className="text-zinc-300">•</span>
               <span className="text-zinc-700">Ends {getSameDayDate()}</span>
             </div>
