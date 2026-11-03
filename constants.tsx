@@ -353,7 +353,7 @@ export const PRICING_PLANS = [
     id: 'lifetime-basic',
     duration: 'Lifetime Access',
     period: 'One-time payment',
-    price: '₦15,000',
+    price: '₦32,000',
     label: 'Best Value'
   }
 ];
@@ -363,7 +363,7 @@ export const TESTIMONIALS: Testimonial[] = [
     name: 'Tunde Kolawole',
     role: 'Senior Architect',
     location: 'Lagos, Nigeria',
-    content: 'Having SketchUp, V-Ray and D5 Render in one bundle changed how our entire studio works. We model, render, and present — all from this ₦15,000 course.'
+    content: 'Having SketchUp, V-Ray and D5 Render in one bundle changed how our entire studio works. We model, render, and present — all from this ₦32,000 course.'
   },
   {
     name: 'Ngozi Ibe',
@@ -384,12 +384,6 @@ export const TESTIMONIALS: Testimonial[] = [
     content: 'SketchUp + V-Ray + D5 Render AI — this pipeline is what firms actually use. I was the only student who knew all three. Landed my dream internship immediately.'
   },
   {
-    name: 'Adaeze Nwosu',
-    role: 'Interior Designer',
-    location: 'Abuja, Nigeria',
-    content: 'I can model a room in SketchUp, render it in V-Ray, and show 10 variations in D5 — all in the time it used to take for one basic drawing. Best ₦15,000 ever.'
-  },
-  {
     name: 'Emeka Adeyemi',
     role: 'Landscape Architect',
     location: 'Port Harcourt, Nigeria',
@@ -399,7 +393,7 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export const FAQ_ITEMS: FaqItem[] = [
   {
-    question: "What exactly do I get for ₦15,000?",
+    question: "What exactly do I get for ₦32,000?",
     answer: "You get 3 complete courses: SketchUp Pro (3D modeling), V-Ray Photorealism (beauty shots), and D5 Render AI (real-time AI rendering). Plus 10,000+ textures, 2,000+ 3D models, all software links, a certified diploma, and 24/7 team support. Lifetime access."
   },
   {

@@ -67,7 +67,7 @@ const CheckoutPage: React.FC = () => {
             className="w-full h-full object-cover"
           />
         </div>
-        <p className="text-xs font-semibold text-gray-600 mt-2 text-center max-w-[200px]">🎨 AutoCAD + SketchUp + V-Ray + D5 Render AI Bundle</p>
+        <p className="text-xs font-semibold text-gray-600 mt-2 text-center">Start with complete zero today.</p>
       </div>
 
       <div className="checkout-card w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden">

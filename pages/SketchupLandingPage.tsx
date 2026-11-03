@@ -591,7 +591,7 @@ const SketchupLandingPage: React.FC = () => {
               <div className="relative z-10">
                 <h3 className="text-2xl md:text-3xl font-bold font-display mb-2">Claim Your Free Access</h3>
                 <div className="flex items-center justify-center gap-3 text-sm text-slate-300 mb-7 font-medium flex-wrap">
-                  <span className="line-through text-slate-500">₦99,000 Value</span>
+                  <span className="line-through text-slate-500">₦50,000 Value</span>
                   <span className="text-slate-600">•</span>
                   <span className="text-emerald-400 font-black">Yours 100% Free</span>
                   <span className="text-slate-600">•</span>

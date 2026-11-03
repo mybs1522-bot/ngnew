@@ -1,76 +1,173 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Star, CheckCircle, CheckCircle2, X, ChevronDown, Sparkles, Eye, Download, Mail, Lock, Loader2, Timer, Check, ShieldCheck } from 'lucide-react';
-import { FRONT_END_COURSES, FRONT_END_PRICE, FRONT_END_ORIGINAL_PRICE } from '../constants';
-import TeamSection from '../components/ui/team';
+import { 
+  CheckCircle, CheckCircle2, X, ChevronDown, 
+  Download, Zap, Gift, MessageCircle,
+  Star
+} from 'lucide-react';
 import { useCountry } from '../lib/CountryContext';
 import { getDiscountPercent } from '../lib/countryConfig';
 import {
-  SocialProofToast,
-  getProblemPoints, getTransformationStories, getFearStats,
-  getValueStackItems, getTestimonialsLanding, getFaqItemsLanding, getIncomeTiers,
-  COURSES_LANDING, PAGE_PREVIEWS_ROW1, PAGE_PREVIEWS_ROW2
+  Logo, Pattern, SocialProofToast,
+  FOUR_COURSES, WHO_IS_THIS_FOR, TRANSFORMATION_STORIES,
+  FREE_BONUSES, TESTIMONIALS_LANDING, FAQ_ITEMS_LANDING,
+  SocialCommentsSlider, StudentRendersShowcase
 } from './LandingHelpers';
+import TeamSection from '../components/ui/team';
 
-/* ─── REUSABLE CTA WITH TIMER ─── */
-const CtaWithTimer = ({ timeLeft, onClick, variant = 'green', formattedPrice, formattedOriginalPrice, discountPercent }: { timeLeft: { h: number; m: number; s: number }; onClick: () => void; variant?: 'green' | 'dark' | 'blue'; formattedPrice: string; formattedOriginalPrice: string; discountPercent: number }) => {
+const getSameDayDate = () => {
+  const d = new Date();
+  const day = d.getDate();
+  const month = d.toLocaleString('en-US', { month: 'long' });
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = day % 100;
+  const suffix = s[(v - 20) % 10] || s[v] || s[0];
+  return `${day}${suffix} ${month}`;
+};
+
+/* ─── REUSABLE PREMIUM CTA WITH TIMER (COMPACT CONVERSION-OPTIMIZED) ─── */
+const CtaWithTimer = ({ 
+  timeLeft, 
+  onClick, 
+  variant = 'default', 
+  title = 'GET ALL 4 COURSES NOW',
+  subtext = 'Instant Google Drive Access • Verified Skill Certificate Included',
+  formattedPrice,
+  formattedOriginalPrice,
+  discountPercent
+}: { 
+  timeLeft?: { h: number; m: number; s: number }; 
+  onClick: () => void; 
+  variant?: 'default' | 'dark' | 'white';
+  title?: string;
+  subtext?: string;
+  formattedPrice?: string;
+  formattedOriginalPrice?: string;
+  discountPercent?: number;
+}) => {
   const f = (v: number) => v.toString().padStart(2, '0');
-  const bgClass = variant === 'dark'
-    ? 'bg-slate-900'
-    : 'bg-white border border-slate-200';
-  const btnClass = variant === 'dark'
-    ? 'bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-500'
-    : 'bg-slate-900 hover:bg-black';
-  const timerAccent = variant === 'dark' ? 'text-orange-400' : 'text-orange-500';
-  const timerBg = variant === 'dark' ? 'bg-slate-800 border-slate-700' : 'bg-orange-50 border-orange-200';
+  const isDark = variant === 'dark';
 
   return (
-    <div className={`${bgClass} rounded-2xl px-5 py-6 relative overflow-hidden max-w-sm mx-auto`}>
-      <div className="absolute top-0 right-0 w-60 h-60 bg-white/5 rounded-full blur-[80px] -mr-16 -mt-16 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/5 rounded-full blur-[60px] -ml-10 -mb-10 pointer-events-none" />
+    <div className={`border ${
+      isDark 
+        ? 'border-zinc-800 bg-zinc-900 text-white' 
+        : 'border-zinc-200/90 bg-white text-zinc-950 shadow-md'
+    } rounded-2xl p-3.5 sm:p-5 relative overflow-hidden max-w-lg mx-auto text-center`}>
+      <div className="relative z-10 flex flex-col items-center gap-2.5 sm:gap-3">
+        
+        {/* Compact Urgency & Live Countdown Bar */}
+        <div className={`w-full flex items-center justify-between gap-2 px-3 py-1.5 rounded-xl border text-xs ${
+          isDark 
+            ? 'bg-zinc-950/80 border-zinc-800 text-zinc-200' 
+            : 'bg-red-50/90 border-red-200/70 text-red-950'
+        }`}>
+          <div className="flex items-center gap-1.5 min-w-0">
+            <span className="size-2 rounded-full bg-red-500 animate-pulse shrink-0" />
+            <span className="font-heading font-bold text-[11px] sm:text-xs truncate">
+              Special Offer • Ends {getSameDayDate()}
+            </span>
+          </div>
 
-      <div className="relative z-10 flex flex-col items-center text-center gap-3">
-        {/* Timer label */}
-        <div className="flex items-center gap-1.5">
-          <Timer size={14} className={`${timerAccent} animate-pulse`} />
-          <span className={`text-[10px] md:text-xs font-bold uppercase tracking-widest ${timerAccent}`}>Offer Ends In</span>
+          {timeLeft && (
+            <div className={`flex items-center gap-1 font-mono text-[11px] sm:text-xs font-bold px-2 py-0.5 rounded-md border shrink-0 ${
+              isDark 
+                ? 'bg-zinc-900 border-zinc-700 text-amber-400' 
+                : 'bg-white border-red-200 text-red-600 shadow-2xs'
+            }`}>
+              <span>{f(timeLeft.h)}h</span>
+              <span className="text-zinc-400">:</span>
+              <span>{f(timeLeft.m)}m</span>
+              <span className="text-zinc-400">:</span>
+              <span className="text-red-500 font-extrabold">{f(timeLeft.s)}s</span>
+            </div>
+          )}
         </div>
 
-        {/* Timer digits */}
-        <div className="flex items-center gap-1">
-          {[{ val: f(timeLeft.h), label: 'HRS' }, { val: f(timeLeft.m), label: 'MIN' }, { val: f(timeLeft.s), label: 'SEC' }].map((unit, i) => (
-            <React.Fragment key={i}>
-              <div className="flex flex-col items-center">
-                <div className={`${timerBg} border rounded-md px-2 py-0.5`}>
-                  <span className={`text-sm font-black tabular-nums font-mono ${variant === 'dark' ? 'text-white' : 'text-slate-900'}`}>{unit.val}</span>
-                </div>
-                <span className={`text-[6px] font-bold uppercase tracking-widest mt-0.5 ${variant === 'dark' ? 'text-slate-500' : 'text-slate-400'}`}>{unit.label}</span>
-              </div>
-              {i < 2 && <span className={`text-xs font-bold ${variant === 'dark' ? 'text-slate-600' : 'text-slate-300'} -mt-3`}>:</span>}
-            </React.Fragment>
-          ))}
+        {/* Pricing Anchor & Savings Badge */}
+        <div className="flex items-center justify-between w-full px-1">
+          <div className="flex items-baseline gap-2">
+            <span className={`text-3xl sm:text-4xl font-heading font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-zinc-950'}`}>
+              {formattedPrice}
+            </span>
+            <span className="text-zinc-400 line-through text-xs sm:text-sm font-mono">
+              {formattedOriginalPrice}
+            </span>
+          </div>
+          <span className="bg-emerald-500/15 text-emerald-700 border border-emerald-500/30 text-[10px] sm:text-[11px] font-mono font-bold px-2.5 py-1 rounded-full shadow-2xs">
+            {discountPercent}% OFF • SAVE NOW
+          </span>
         </div>
 
-        {/* Price */}
-        <div className="flex items-baseline gap-2">
-          <span className={`text-sm ${variant === 'dark' ? 'text-slate-500' : 'text-slate-400'} line-through font-bold`}>{formattedOriginalPrice}</span>
-          <span className={`text-3xl font-display font-black ${variant === 'dark' ? 'text-white' : 'text-slate-900'}`}>{formattedPrice}</span>
-          <span className="bg-orange-100 text-orange-500 text-[9px] font-bold px-1.5 py-0.5 rounded-full">{discountPercent}% OFF</span>
-        </div>
-
-        {/* Button */}
+        {/* High Conversion 3D Action Button */}
         <button
           onClick={onClick}
-          className={`${btnClass} text-white font-bold text-sm px-6 py-3 rounded-xl flex items-center justify-center gap-2 group hover:scale-[1.02] active:scale-[0.98] transition-all w-full`}
-          style={{ boxShadow: '0 0 0 2px #f97316, 0 0 16px rgba(249,115,22,0.4)' }}
+          className={`w-full py-3.5 sm:py-4 px-5 font-heading font-extrabold text-sm sm:text-base flex items-center justify-center gap-2.5 group cursor-pointer select-none ${
+            isDark ? 'btn-3d-light' : 'btn-3d'
+          }`}
         >
-          <Download size={16} className="shrink-0" />
-          <span>Get Instant Access</span>
-          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform shrink-0" />
+          <span className="tracking-wide uppercase">{title}</span>
+          <Download size={18} className="group-hover:translate-y-0.5 transition-transform shrink-0 stroke-[2.5]" />
         </button>
 
-        <p className={`text-[10px] font-medium ${variant === 'dark' ? 'text-slate-500' : 'text-slate-400'}`}>Lifetime access • Free AI software • 7-day money-back</p>
+        {/* Compact Trust Points */}
+        <div className="flex items-center justify-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] text-zinc-500 font-medium">
+          <span className="inline-flex items-center gap-1">
+            <CheckCircle2 size={12} className="text-emerald-600 shrink-0" /> Instant Drive Access
+          </span>
+          <span className="text-zinc-300">•</span>
+          <span className="inline-flex items-center gap-1">
+            <CheckCircle2 size={12} className="text-emerald-600 shrink-0" /> 4 Core Masterclasses
+          </span>
+          <span className="text-zinc-300">•</span>
+          <span className="inline-flex items-center gap-1">
+            <CheckCircle2 size={12} className="text-emerald-600 shrink-0" /> Lifetime Access
+          </span>
+        </div>
+
       </div>
+    </div>
+  );
+};
+
+/* ─── FLUID CHANGING AUDIENCE TEXT ─── */
+const ChangingAudienceText: React.FC = () => {
+  const audiences = [
+    'Beginners',
+    'Architecture Students',
+    'Interior Designers',
+    'Architects',
+    'Contractors & Builders',
+    'Freelancers',
+    'Civil Engineers',
+    '3D Visualizers'
+  ];
+  const [index, setIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % audiences.length);
+        setIsTransitioning(false);
+      }, 220);
+    }, 2200);
+    return () => clearInterval(timer);
+  }, [audiences.length]);
+
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-1.5 text-xs sm:text-sm text-zinc-700 font-medium mb-3.5 px-2">
+      <span className="font-heading font-medium text-zinc-600">This bundle is perfect for</span>
+      <span className="inline-flex items-center justify-center min-w-[130px] sm:min-w-[160px] h-7 px-3 bg-zinc-100 border border-zinc-200/90 rounded-full font-heading font-bold text-zinc-950 shadow-2xs overflow-hidden">
+        <span
+          className={`inline-block transition-transform transition-opacity duration-200 ease-out ${
+            isTransitioning ? 'opacity-0 -translate-y-2' : 'opacity-100 translate-y-0'
+          }`}
+        >
+          {audiences[index]}
+        </span>
+      </span>
     </div>
   );
 };
@@ -79,590 +176,666 @@ const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const { country } = useCountry();
   const discount = getDiscountPercent(country);
-  const TRANSFORMATION_STORIES = getTransformationStories(country);
-  const VALUE_STACK_ITEMS = getValueStackItems(country);
-  const TESTIMONIALS_LANDING = getTestimonialsLanding(country);
-  const FAQ_ITEMS_LANDING = getFaqItemsLanding(country);
-  const INCOME_TIERS = getIncomeTiers(country);
 
-  const [timeLeft, setTimeLeft] = useState(() => { const D = (3 * 3600 + 36 * 60 + 20) * 1000, r = D - (Date.now() % D); return { h: Math.floor((r / 3600000) % 24), m: Math.floor((r / 60000) % 60), s: Math.floor((r / 1000) % 60) }; });
-  const [showStickyBar, setShowStickyBar] = useState(false);
-  useEffect(() => { window.scrollTo(0, 0); if ((window as any).fbq) (window as any).fbq('track', 'ViewContent', { content_name: 'Avada Design — SketchUp + V-Ray + D5 Render AI', value: country.price, currency: country.currencyCode }); }, [country]);
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const D = (3 * 3600 + 36 * 60 + 20) * 1000, r = D - (Date.now() % D);
+    return { h: Math.floor((r / 3600000) % 24), m: Math.floor((r / 60000) % 60), s: Math.floor((r / 1000) % 60) };
+  });
+
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-  const [studentCount, setStudentCount] = useState(22390);
+  const [showExitModal, setShowExitModal] = useState(false);
+  const [hasShownExitModal, setHasShownExitModal] = useState(false);
 
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  // Timer Tick
   useEffect(() => {
-    const calc = () => { const D = (3 * 3600 + 36 * 60 + 20) * 1000, now = Date.now(), r = D - (now % D); setTimeLeft({ h: Math.floor((r / 3600000) % 24), m: Math.floor((r / 60000) % 60), s: Math.floor((r / 1000) % 60) }); };
+    const calc = () => {
+      const D = (3 * 3600 + 36 * 60 + 20) * 1000, now = Date.now(), r = D - (now % D);
+      setTimeLeft({ h: Math.floor((r / 3600000) % 24), m: Math.floor((r / 60000) % 60), s: Math.floor((r / 1000) % 60) });
+    };
     const t = setInterval(calc, 1000); calc(); return () => clearInterval(t);
   }, []);
-  useEffect(() => { const h = () => setShowStickyBar(window.scrollY > 600); window.addEventListener('scroll', h, { passive: true }); return () => window.removeEventListener('scroll', h); }, []);
-  useEffect(() => { const t = setInterval(() => setStudentCount(c => c + 1), 4000); return () => clearInterval(t); }, []);
-  const [headlineIdx, setHeadlineIdx] = useState(0);
+
+  // Exit-Intent Trigger
   useEffect(() => {
-    const t = setInterval(() => {
-      setHeadlineIdx(i => (i + 1) % 3);
-    }, 5000);
-    return () => clearInterval(t);
-  }, []);
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0 && !hasShownExitModal) {
+        setShowExitModal(true);
+        setHasShownExitModal(true);
+      }
+    };
+    document.addEventListener('mouseleave', handleMouseLeave);
+    return () => document.removeEventListener('mouseleave', handleMouseLeave);
+  }, [hasShownExitModal]);
+
+  // Lock body scroll when modal is active
+  useEffect(() => {
+    if (showExitModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showExitModal]);
 
   const formatTime = (val: number) => val.toString().padStart(2, '0');
 
+  // Checkout navigation (No inline Razorpay modal)
   const openPaymentModal = () => {
-    if ((window as any).fbq) (window as any).fbq('track', 'InitiateCheckout');
+    setShowExitModal(false);
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'InitiateCheckout');
+    }
     navigate('/checkout');
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 font-sans overflow-x-hidden selection:bg-orange-100">
-
-      {/* ═══ COUNTRY BANNER ═══ */}
-      <div className="w-full bg-green-600 text-white text-center py-2.5 px-4 font-bold text-sm">
+    <div className="min-h-screen bg-white text-zinc-950 font-sans selection:bg-zinc-200 selection:text-zinc-900">
+      
+      {/* ═══ COUNTRY BANNER (LOCALIZED) ═══ */}
+      <div className="w-full bg-green-600 text-white text-center py-2 px-4 font-bold text-xs sm:text-sm shadow-xs">
         {country.bannerText}
       </div>
 
+      <div className="w-full">
+        <div className="mx-auto px-4 md:max-w-4xl">
+          <main>
+            
+            {/* ═══ 1. HERO SECTION ═══ */}
+            <section className="screen-line-before screen-line-after border-x border-grid pt-5 sm:pt-8 pb-8 bg-white text-center">
+              <div className="px-2 sm:px-4">
 
-      <main>
-        {/* 1. HERO — The Primary Pitch */}
-        <section className="relative pb-12 md:pb-24 overflow-hidden bg-slate-950 text-white border-b border-slate-900">
-          {/* Decorative background gradients */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-[radial-gradient(ellipse_at_top,rgba(249,115,22,0.15),transparent_50%)] pointer-events-none" />
-          <div className="absolute top-[20%] left-[-10%] w-[40%] aspect-square bg-[radial-gradient(circle,rgba(249,115,22,0.05),transparent_70%)] pointer-events-none" />
-          <div className="absolute bottom-[10%] right-[-10%] w-[40%] aspect-square bg-[radial-gradient(circle,rgba(249,115,22,0.05),transparent_70%)] pointer-events-none" />
+                {/* Outcome Headline with Highlighter */}
+                <div className="mb-2.5">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-0.5 bg-amber-500/10 border border-amber-500/25 text-amber-900 rounded-full text-xs font-mono font-semibold mb-2">
+                    ⏱️ In the next 15 days
+                  </span>
+                  <h1 className="font-heading font-bold text-zinc-950 tracking-tight leading-[1.18] max-w-3xl mx-auto">
+                    <span className="block text-2xl sm:text-4xl md:text-5xl">
+                      Learn Interior &amp; Exterior Design | Get Job or Start Your Own Company
+                    </span>
+                  </h1>
+                </div>
 
-          <div className="max-w-3xl mx-auto px-5 md:px-6 relative z-10">
-            <div className="flex flex-col items-center text-center pt-10 md:pt-20">
+                {/* Pill: Recorded Course + 24/7 WhatsApp Mentor Support */}
+                <div className="flex items-center justify-center my-3">
+                  <div className="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-1.5 bg-zinc-950 text-white rounded-full shadow-md border border-zinc-800 text-xs sm:text-sm">
+                    <span className="font-heading font-semibold text-zinc-200">
+                      🎬 4 Complete Courses
+                    </span>
+                    <span className="text-zinc-500 font-mono font-bold">+</span>
+                    <span className="inline-flex items-center gap-1.5 font-heading font-bold text-emerald-400">
+                      <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                      24/7 WhatsApp Mentor Support
+                    </span>
+                  </div>
+                </div>
 
-              {/* Badge */}
-              <div className="mb-6 md:mb-8 inline-flex items-center gap-2 px-4 py-1.5 bg-slate-900 border border-slate-800 rounded-full select-none">
-                <span className="flex h-2 w-2 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
-                </span>
-                <span className="text-[10px] md:text-xs font-bold text-orange-400 uppercase tracking-[0.15em]">{country.flag} #1 Design & Render Blueprint in {country.name}</span>
+                {/* Beginner Friendly Callout */}
+                <div className="font-hand text-base sm:text-lg text-emerald-700 font-bold -rotate-1 mb-3">
+                  ✨ Zero 3D experience needed • 100% beginner friendly!
+                </div>
+
+                {/* Impulse Price Anchor */}
+                <div className="text-center mb-5">
+                  <span className="inline-block text-xs sm:text-sm text-zinc-700 font-normal bg-zinc-100/90 border border-zinc-200 px-3.5 py-1.5 rounded-2xl sm:rounded-full shadow-2xs">
+                    AutoCAD + SketchUp Pro + V-Ray + D5 Render AI | Only <strong className="text-zinc-950 font-bold font-mono">{country.formattedPrice}</strong> (Nothing extra)
+                  </span>
+                </div>
+
+                {/* ═══ OLD HERO VIDEO ═══ */}
+                <div className="w-full max-w-3xl mx-auto mb-6 overflow-hidden rounded-2xl shadow-2xl border-2 border-zinc-900 bg-black relative" style={{ paddingTop: '56.25%' }}>
+                  <iframe 
+                    src="https://iframe.mediadelivery.net/embed/494628/81badf78-a3b0-42fa-9f23-9f7213d4185c?autoplay=true&loop=true&muted=true&preload=true&responsive=true" 
+                    loading="eager" 
+                    style={{ border: 0, position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }} 
+                    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen" 
+                    allowFullScreen={true} 
+                  />
+                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-4 text-center pointer-events-none z-10">
+                    <p className="text-white text-xs sm:text-sm font-bold tracking-wide">
+                      AutoCAD (Planning) + SketchUp (3D Models) + V-Ray & D5 Render AI (Photorealism)
+                    </p>
+                  </div>
+                </div>
+
+                {/* ═══ INSTAGRAM, X & FACEBOOK NIGERIAN COMMUNITY REVIEWS SLIDER ═══ */}
+                <SocialCommentsSlider />
+
+                {/* ═══ 6 POINTERS: WHAT YOU GET ═══ */}
+                <div className="max-w-3xl mx-auto mb-6">
+                  <div className="text-center mb-3">
+                    <span className="text-xs sm:text-sm font-heading font-bold text-zinc-950 bg-zinc-100 border border-zinc-200 px-3.5 py-1 rounded-full">
+                      <strong>You'll Get Inside</strong>
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-left">
+                    {[
+                      {
+                        num: '01',
+                        icon: '📐',
+                        title: 'All Software Download Links Included (AutoCAD, SketchUp, V-Ray, D5)'
+                      },
+                      {
+                        num: '02',
+                        icon: '🛋️',
+                        title: '10,000+ Ready-To-Use 3D Furniture & Texture Models'
+                      },
+                      {
+                        num: '03',
+                        icon: '⚡',
+                        title: 'Zero Experience Needed (Day 1 Step-by-Step Blueprint)'
+                      },
+                      {
+                        num: '04',
+                        icon: '📁',
+                        title: 'Instant Google Drive Access in 60 Seconds'
+                      },
+                      {
+                        num: '05',
+                        icon: '💬',
+                        title: '24/7 Dedicated WhatsApp Expert Mentor Help'
+                      },
+                      {
+                        num: '06',
+                        icon: '📜',
+                        title: 'Verifiable Digital Skill Certificate & Guaranteed Projects'
+                      }
+                    ].map((pt, i) => (
+                      <div key={i} className="bg-zinc-50 border border-zinc-200/90 rounded-xl p-2.5 sm:p-3 flex items-center gap-3 hover:border-zinc-300 transition-colors duration-150">
+                        <div className="flex flex-col items-center shrink-0 w-6">
+                          <span className="text-lg leading-none">{pt.icon}</span>
+                          <span className="text-[9px] font-mono font-bold text-zinc-400 mt-0.5">{pt.num}</span>
+                        </div>
+                        <div className="font-heading font-bold text-zinc-950 text-xs sm:text-sm leading-tight">
+                          {pt.title}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Fluid Changing Text: This bundle is perfect for ... */}
+                <ChangingAudienceText />
+
+                {/* Primary Hero CTA */}
+                <div className="max-w-xl mx-auto mb-6">
+                  <CtaWithTimer 
+                    timeLeft={timeLeft} 
+                    onClick={openPaymentModal} 
+                    variant="default"
+                    title="GET ALL 4 COURSES NOW"
+                    subtext="Instant Access in 60 Seconds • Lifetime Membership"
+                    formattedPrice={country.formattedPrice}
+                    formattedOriginalPrice={country.formattedOriginalPrice}
+                    discountPercent={discount}
+                  />
+                </div>
+
+                {/* ═══ OLD PRODUCT PIPELINE IMAGE ═══ */}
+                <div className="max-w-3xl mx-auto mb-4 px-2 flex flex-col items-center">
+                  <h3 className="text-sm sm:text-base font-heading font-bold text-zinc-800 mb-2">
+                    Complete 4-Course Architecture & 3D Pipeline
+                  </h3>
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1dmbUPuZb_ioj6CuCszjfAIAQ5I9rllAd&sz=w1600"
+                    onError={(e) => { e.currentTarget.src = "/course-pipeline.png"; }}
+                    alt="Master the Complete Plan-to-Render Pipeline: AutoCAD, SketchUp, V-Ray, D5 Render AI"
+                    className="w-full h-auto rounded-2xl shadow-xl border border-zinc-200 cursor-pointer hover:scale-[1.01] transition-transform duration-300"
+                    onClick={openPaymentModal}
+                  />
+                </div>
+
               </div>
+            </section>
 
-              {/* Main Hook Headline */}
-              <h1 className="mb-4 max-w-3xl min-h-[6.5rem] md:min-h-[9.5rem] flex items-center justify-center">
-                <span 
-                  key={headlineIdx}
-                  className="block text-xl leading-[1.3] md:text-5xl md:leading-[1.15] font-display font-extrabold tracking-tight text-white"
-                  style={{ animation: 'fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}
+            <Pattern />
+
+            {/* ═══ STUDENT WORK & RENDERS ═══ */}
+            <section className="screen-line-before screen-line-after border-x border-grid py-8 sm:py-12 bg-zinc-950 text-white overflow-hidden">
+              <StudentRendersShowcase />
+
+              <div className="text-center mt-6">
+                <button
+                  onClick={openPaymentModal}
+                  className="btn-3d-light px-7 py-3 font-heading font-bold text-xs sm:text-sm cursor-pointer select-none inline-flex items-center gap-2"
                 >
-                  {headlineIdx === 0 && (
-                    <>
-                      {country.heroCurrencyHook}. Master modern{" "}
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400">
-                        Interior & Exterior Design
-                      </span>{" "}
-                      and lock in {country.heroContract} contracts.
-                    </>
-                  )}
-                  {headlineIdx === 1 && (
-                    <>
-                      Your degree won't pay {country.premiumRentArea} rent. Master premium{" "}
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400">
-                        Photorealistic 3D Rendering
-                      </span>{" "}
-                      and charge developers {country.heroRenderFee} per view.
-                    </>
-                  )}
-                  {headlineIdx === 2 && (
-                    <>
-                      Stop begging cheap clients for scraps. Build elite{" "}
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400">
-                        High-Income Studio Pipelines
-                      </span>{" "}
-                      and secure {country.heroUpfront} upfront fees.
-                    </>
-                  )}
-                </span>
-              </h1>
+                  <span>Claim Full 4-Course Access Now</span>
+                  <Download size={15} className="shrink-0 stroke-[2.5]" />
+                </button>
+              </div>
+            </section>
 
-              {/* Income Subheadline */}
-              <p className="text-[11px] min-[360px]:text-sm sm:text-lg md:text-2xl font-bold text-slate-200 mb-6 font-display tracking-tight whitespace-nowrap overflow-x-visible">
-                Charge <span className="text-orange-400 underline underline-offset-4 decoration-orange-500 font-extrabold">{country.renderCharge} to {country.projectRange}</span> Per Client Design
-              </p>
+            <Pattern />
 
-              {/* Zero-friction Info Badges */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-2xl mb-8 md:mb-10 text-left">
-                <div className="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 flex items-center gap-3">
-                  <span className="text-2xl">💰</span>
-                  <div>
-                    <p className="text-xs font-bold text-white uppercase tracking-wider">Earn While Learning</p>
-                    <p className="text-[11px] text-slate-400">Includes {country.freelanceTotal} in guaranteed projects</p>
-                  </div>
+            {/* ═══ REAL STUDENT TESTIMONIALS (NIGERIAN NAMES) ═══ */}
+            <section className="screen-line-before screen-line-after border-x border-grid py-8 sm:py-12 bg-zinc-50/50">
+              <div className="px-3 sm:px-4">
+                
+                {/* ═══ CTA ABOVE WHAT DESIGNERS SAY ═══ */}
+                <div className="max-w-xl mx-auto mb-8 sm:mb-10">
+                  <CtaWithTimer 
+                    timeLeft={timeLeft} 
+                    onClick={openPaymentModal} 
+                    variant="default"
+                    title="GET ALL 4 COURSES NOW"
+                    subtext="Instant Access in 60 Seconds • Lifetime Membership"
+                    formattedPrice={country.formattedPrice}
+                    formattedOriginalPrice={country.formattedOriginalPrice}
+                    discountPercent={discount}
+                  />
                 </div>
-                <div className="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 flex items-center gap-3">
-                  <span className="text-2xl">💻</span>
-                  <div>
-                    <p className="text-xs font-bold text-white uppercase tracking-wider">No Setup Fees</p>
-                    <p className="text-[11px] text-slate-400">Free student & AI software links included</p>
-                  </div>
+
+                <div className="text-center mb-6">
+                  <span className="text-[10px] sm:text-xs font-mono font-medium text-zinc-700 bg-zinc-100 border border-zinc-200 px-3 py-0.5 rounded-full">
+                    💬 Verified student reviews
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-heading font-bold text-zinc-950 mt-2">
+                    What Nigerian Designers &amp; Architects Say
+                  </h2>
                 </div>
-                <div className="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 flex items-center gap-3">
-                  <span className="text-2xl">🎓</span>
-                  <div>
-                    <p className="text-xs font-bold text-white uppercase tracking-wider">Zero Experience Required</p>
-                    <p className="text-[11px] text-slate-400">We start from absolute scratch</p>
-                  </div>
+
+                {/* Featured Transformation Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 mb-6">
+                  {TRANSFORMATION_STORIES.map((s, idx) => (
+                    <div key={idx} className="bg-white border border-zinc-200 rounded-xl p-4 hover:border-zinc-400 transition-colors duration-150 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2.5">
+                          <div className="flex items-center gap-2">
+                            <div className="size-8 rounded-full bg-zinc-900 text-white font-mono font-bold flex items-center justify-center text-xs">
+                              {s.name.charAt(0)}
+                            </div>
+                            <div>
+                              <h3 className="font-heading font-bold text-zinc-950 text-sm leading-tight">{s.name}</h3>
+                              <span className="text-[10px] text-zinc-500 font-mono">{s.role} • {s.city}</span>
+                            </div>
+                          </div>
+                          <span className="bg-emerald-50 text-emerald-800 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full border border-emerald-200">
+                            {s.incomeIncrease}
+                          </span>
+                        </div>
+
+                        <div className="space-y-1.5 text-xs my-2.5">
+                          <p className="text-zinc-500 bg-zinc-50 p-2 rounded-lg"><strong className="text-zinc-700 font-semibold">Before:</strong> {s.before}</p>
+                          <p className="text-zinc-800 bg-zinc-100/70 p-2 rounded-lg"><strong className="text-zinc-950 font-semibold">After:</strong> {s.after}</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-2 border-t border-zinc-100 text-[11px] text-zinc-400 font-mono">
+                        <div className="flex text-amber-400">
+                          {[...Array(5)].map((_, i) => <Star key={i} size={11} className="fill-amber-400" />)}
+                        </div>
+                        <span className="text-emerald-700 font-medium flex items-center gap-1"><CheckCircle size={11} /> Verified Learner</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Testimonials List */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  {TESTIMONIALS_LANDING.map((t, idx) => (
+                    <div key={idx} className="bg-white border border-zinc-200 rounded-xl p-3 flex flex-col justify-between text-xs">
+                      <div>
+                        <div className="flex text-amber-400 mb-1.5">
+                          {[...Array(5)].map((_, i) => <Star key={i} size={11} className="fill-amber-400" />)}
+                        </div>
+                        <p className="text-zinc-600 leading-relaxed mb-2.5">"{t.content}"</p>
+                      </div>
+                      <div className="pt-2 border-t border-zinc-100">
+                        <span className="font-heading font-semibold text-zinc-950 block truncate">{t.name}</span>
+                        <span className="text-[10px] font-mono text-zinc-500 block truncate">{t.role} • {t.location}</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
+            </section>
 
-              {/* Hero Video */}
-              <div className="w-full mb-10 md:mb-12 overflow-hidden rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.15)] border-2 border-orange-500/20" style={{ position: 'relative', paddingTop: '56.25%' }}>
-                <iframe src="https://iframe.mediadelivery.net/embed/494628/81badf78-a3b0-42fa-9f23-9f7213d4185c?autoplay=true&loop=true&muted=true&preload=true&responsive=true" loading="lazy" style={{ border: 0, position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen;" allowFullScreen={true} />
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.4) 60%, transparent 100%)', padding: '2.5rem 1.25rem 1.25rem', pointerEvents: 'none', zIndex: 10 }}>
-                  <p style={{ color: '#fff', fontSize: 'clamp(0.85rem, 2.5vw, 1.25rem)', fontWeight: 700, textAlign: 'center', margin: 0, textShadow: '0 2px 8px rgba(0,0,0,0.5)', letterSpacing: '0.01em', lineHeight: 1.4 }}>
-                    AutoCAD (Planning) + SketchUp (3D Models) + V-Ray & D5 Render AI (Photorealism)
+            <Pattern />
+
+            {/* ═══ MEET YOUR DESIGN MENTORS (ORIGINAL MARQUEE GALLERY) ═══ */}
+            <TeamSection />
+
+            <Pattern />
+
+            {/* ═══ WHO IS THIS FOR ═══ */}
+            <section className="screen-line-before screen-line-after border-x border-grid py-8 sm:py-12 bg-white">
+              <div className="px-3 sm:px-4">
+                <div className="text-center mb-6">
+                  <span className="text-[10px] sm:text-xs font-mono font-medium text-zinc-700 bg-zinc-100 border border-zinc-200 px-3 py-0.5 rounded-full">
+                    🎯 Who this bundle is for
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-heading font-bold text-zinc-950 mt-2">
+                    Designed for Anyone Who Wants to Model &amp; Render Spaces
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
+                  {WHO_IS_THIS_FOR.map((item, idx) => (
+                    <div key={idx} className="bg-zinc-50 border border-zinc-200/90 rounded-xl p-3.5 sm:p-4 transition-colors duration-150 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-xl p-1 bg-white rounded-lg border border-zinc-200">{item.icon}</span>
+                          <span className="text-[9px] font-mono font-bold uppercase tracking-wider bg-zinc-200/80 text-zinc-800 px-2 py-0.5 rounded border border-zinc-300/60">
+                            {item.badge}
+                          </span>
+                        </div>
+                        <h3 className="font-heading font-bold text-zinc-950 text-sm sm:text-base mb-1">{item.role}</h3>
+                        <p className="text-zinc-600 text-xs leading-relaxed mb-2.5">{item.desc}</p>
+                      </div>
+                      <div className="pt-2 border-t border-zinc-200/60 flex items-center gap-1.5 text-xs font-medium text-emerald-700">
+                        <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                        <span><span className="highlight-green">✓ 100% Ideal For You</span></span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <Pattern />
+
+            {/* ═══ ONLY 4 COURSES SHOWCASE: SketchUp, V-Ray, D5 Render, AutoCAD ═══ */}
+            <section className="screen-line-before screen-line-after border-x border-grid py-8 sm:py-12 bg-white">
+              <div className="px-3 sm:px-4">
+                <div className="text-center mb-6">
+                  <span className="text-[10px] sm:text-xs font-mono font-medium text-zinc-700 bg-zinc-100 border border-zinc-200 px-3 py-0.5 rounded-full">
+                    📚 4 core courses included
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-heading font-bold text-zinc-950 mt-2">
+                    The 4 Core Masterclasses In This Bundle
+                  </h2>
+                  <p className="text-xs sm:text-sm text-zinc-500 max-w-lg mx-auto mt-1">
+                    AutoCAD (Blueprints) + SketchUp (3D Modeling) + V-Ray (Photorealism) + D5 Render AI (Real-time).
                   </p>
                 </div>
-              </div>
 
-              {/* Call To Action */}
-              <div className="w-full max-w-md mx-auto">
-                <button 
-                  onClick={openPaymentModal} 
-                  className="w-full px-8 py-[18px] bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-500 text-white rounded-xl font-bold text-lg md:text-xl shadow-[0_0_30px_rgba(249,115,22,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-3 group premium-stroke"
-                >
-                  Get Instant Access — {country.formattedPrice} <ArrowRight className="group-hover:translate-x-1 transition-transform duration-200" size={20} />
-                </button>
-                
-                <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 text-xs text-slate-400 font-medium">
-                  <span className="flex items-center gap-1"><ShieldCheck size={14} className="text-orange-500" /> 7-Day Money-Back Guarantee</span>
-                  <span className="hidden sm:inline">•</span>
-                  <span className="flex items-center gap-1"><Check size={14} className="text-orange-500" /> Lifetime Updates</span>
-                </div>
-              </div>
+                {/* 4 Courses Grid with Original Google Drive Thumbnails */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                  {FOUR_COURSES.map((c) => (
+                    <div key={c.id} className="bg-white border border-zinc-200 rounded-2xl overflow-hidden hover:border-zinc-400 transition-colors duration-150 flex flex-col justify-between shadow-xs">
+                      <div>
+                        {/* 16:9 Aspect ratio thumbnail with old Google Drive thumbnail */}
+                        <div className="relative aspect-video overflow-hidden bg-zinc-100 border-b border-zinc-200">
+                          <img 
+                            src={c.imageUrl} 
+                            alt={c.title} 
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                          <div className="absolute top-2.5 left-2.5 bg-zinc-950/85 backdrop-blur-xs text-white text-[10px] font-mono font-medium px-2 py-0.5 rounded border border-white/10">
+                            {c.software}
+                          </div>
+                          <div className="absolute top-2.5 right-2.5 bg-emerald-600 text-white text-[10px] font-mono font-medium px-2 py-0.5 rounded shadow-xs">
+                            {c.students} Learners
+                          </div>
+                        </div>
 
-              {/* Social Proof Stats */}
-              <div className="w-full mt-10 pt-8 border-t border-slate-900 flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400">
-                <span className="flex items-center gap-1.5"><Star size={13} className="fill-orange-400 text-orange-400" /> 4.9/5 from 50,000+ Students</span>
-                <span className="hidden md:inline">•</span>
-                <span className="flex items-center gap-1.5">🎓 Active Designers in 18+ Countries</span>
-                <span className="hidden md:inline">•</span>
-                <span className="flex items-center gap-1.5">🔥 Special Offer Discount Applied</span>
-              </div>
+                        {/* Course Content */}
+                        <div className="p-4 sm:p-5">
+                          <h3 className="font-heading font-bold text-zinc-950 text-base sm:text-lg mb-1">{c.title}</h3>
+                          <p className="text-xs text-zinc-600 mb-3 leading-relaxed">{c.description}</p>
 
-            </div>
-          </div>
-        </section>
+                          <div className="space-y-1.5 border-t border-zinc-100 pt-2.5">
+                            {c.learningPoints.map((pt, pIdx) => (
+                              <div key={pIdx} className="flex items-start gap-1.5 text-xs text-zinc-700">
+                                <CheckCircle size={13} className="text-orange-500 shrink-0 mt-0.5" />
+                                <span>{pt}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
 
-
-        {/* ═══════ COURSE SLIDESHOW — Master Every Tool ═══════ */}
-        <section className="py-12 md:py-16 bg-white border-b border-gray-100 overflow-hidden relative text-center">
-           <div className="max-w-5xl mx-auto px-4">
-             <h2 className="text-2xl md:text-4xl font-display font-extrabold text-slate-900 tracking-tight mb-8">
-               We Teach 4 Courses You Need For Your Career
-             </h2>
-             <img 
-               src="https://drive.google.com/thumbnail?id=1dmbUPuZb_ioj6CuCszjfAIAQ5I9rllAd&sz=w1600" 
-               alt="We Teach 4 Courses You Need For Your Career: AutoCAD, SketchUp, V-Ray, D5 Render AI" 
-               className="w-full rounded-2xl shadow-lg border border-slate-100" 
-             />
-           </div>
-        </section>
-
-
-        {/* ═══════ Outcome & Why Different — After Courses ═══════ */}
-        <section className="py-10 md:py-14 bg-white">
-          <div className="max-w-2xl mx-auto px-5">
-              {/* Outcome strip */}
-              <div className="w-full mb-8 grid grid-cols-2 gap-3">
-                <div className="bg-white border border-slate-200 rounded-2xl px-4 py-4 text-left shadow-sm">
-                  <p className="text-[15px] font-bold text-slate-900 mb-1">💰 Charge Premium Fees</p>
-                  <p className="text-[12px] text-slate-600 leading-relaxed">Wealthy {country.premiumAreas} developers won't look at cheap sketches. Renders close contracts instantly.</p>
-                </div>
-                <div className="bg-white border border-slate-200 rounded-2xl px-4 py-4 text-left shadow-sm">
-                  <p className="text-[15px] font-bold text-slate-900 mb-1">🏢 Interior & Exterior Mastery</p>
-                  <p className="text-[12px] text-slate-600 leading-relaxed">Master both floor plans, detailed interior carpentry, and massive exterior villas.</p>
-                </div>
-              </div>
-
-              {/* Why different */}
-              <div className="w-full bg-orange-50/60 border border-orange-200/70 rounded-2xl px-5 py-5 text-left">
-                <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.15em] text-orange-500 mb-4">🔥 The Ultimate Fast-Track Blueprint</p>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> Learn the standard 3D plan-to-render pipeline standard in luxury design agencies</li>
-                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> AutoCAD + SketchUp + V-Ray + D5 Render AI: Master all 4 in one package</li>
-                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> Earn while you study: We give you real client briefs and pay you cash directly</li>
-                  <li className="flex items-start gap-3 text-[14px] md:text-[15px] text-slate-800 leading-[1.6]"><span className="text-orange-500 shrink-0 mt-0.5 font-bold">—</span> Stop collecting useless certificates. Build a portfolio that commands wealth.</li>
-                </ul>
-              </div>
-          </div>
-        </section>
-
-
-        {/* ═══════ CTA #1 — After Course Showcase ═══════ */}
-        <section className="py-8 md:py-10 px-4 md:px-5">
-          <div className="max-w-3xl mx-auto">
-            <CtaWithTimer timeLeft={timeLeft} onClick={openPaymentModal} variant="green" formattedPrice={country.formattedPrice} formattedOriginalPrice={country.formattedOriginalPrice} discountPercent={discount} />
-          </div>
-        </section>
-
-
-        {/* AI ENHANCEMENT — Visual Proof */}
-        <section className="py-16 md:py-20 bg-white border-b border-slate-200">
-          <div className="max-w-5xl mx-auto px-5">
-            <div className="reveal text-center mb-10">
-              <p className="text-orange-500 text-xs font-mono uppercase tracking-widest mb-3">AI-Powered Rendering</p>
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-slate-900 tracking-tight mb-4">Learn <span className="text-orange-600">D5 Render AI</span></h2>
-              <p className="text-slate-500 text-base max-w-xl mx-auto">Create stunning photorealistic renders in real-time — free AI tools that run locally on your system.</p>
-            </div>
-            <div className="reveal flex justify-center">
-              <video
-                src="https://rendair-landingpage.s3.us-east-1.amazonaws.com/rendair-ai-chat-03-cc.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full max-w-4xl rounded-2xl shadow-2xl"
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* 4. STUDENT WORK CAROUSEL — Visual Proof */}
-        <section className="py-16 md:py-24 bg-slate-50 overflow-hidden border-b border-slate-200 grid-bg">
-          <div className="max-w-5xl mx-auto px-5 mb-12 text-center">
-            <div className="reveal">
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-slate-900 tracking-tight mb-4">See What Our <span className="text-orange-600">Students Have Created</span></h2>
-              <p className="text-slate-600 text-lg max-w-2xl mx-auto italic font-serif">"With 24/7 team support, these students transformed their portfolios and confidence."</p>
-            </div>
-          </div>
-          <div className="flex flex-col gap-6 md:gap-8">
-            <div className="flex gap-3 md:gap-8 animate-scroll-left hover:pause">
-              {[...PAGE_PREVIEWS_ROW1, ...PAGE_PREVIEWS_ROW1].map((img, i) => (
-                <div key={i} className="w-[200px] md:w-[400px] shrink-0 aspect-video rounded-xl md:rounded-2xl overflow-hidden border border-slate-200 shadow-2xl relative group bg-slate-100">
-                  <img src={img} alt="Student Work" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                </div>
-              ))}
-            </div>
-            <div className="flex gap-3 md:gap-8 animate-scroll-right hover:pause">
-              {[...PAGE_PREVIEWS_ROW2, ...PAGE_PREVIEWS_ROW2].map((img, i) => (
-                <div key={i} className="w-[200px] md:w-[400px] shrink-0 aspect-video rounded-xl md:rounded-2xl overflow-hidden border border-slate-200 shadow-2xl relative group bg-slate-100">
-                  <img src={img} alt="Student Work" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-
-        {/* ═══════ FREELANCE PROJECTS — Guaranteed ═══════ */}
-        <section className="py-12 md:py-16 bg-gradient-to-br from-green-50 to-emerald-50 border-b border-green-200">
-          <div className="max-w-4xl mx-auto px-5">
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-100 border border-green-300 rounded-full mb-4">
-                <span className="text-green-600 text-xs font-bold uppercase tracking-widest">{country.flag} Every Student Gets This</span>
-              </div>
-              <h2 className="text-3xl md:text-5xl font-display font-black text-slate-900 tracking-tight mb-4">
-                {country.freelanceTotal} Worth of <span className="text-green-600">Freelance Projects</span>
-              </h2>
-              <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto">
-                We don't just teach you — we give you real paying work. Every enrolled student receives guaranteed freelance projects worth {country.freelanceTotal} to build their portfolio and earn while learning.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white border border-green-200 rounded-2xl p-6 shadow-sm text-center">
-                <span className="text-3xl mb-3 block">🏠</span>
-                <h3 className="font-bold text-slate-900 text-lg mb-1">Residential Renders</h3>
-                <p className="text-sm text-slate-500">Create photorealistic renders for real homeowners and developers</p>
-                <p className="mt-3 text-green-600 font-black text-lg">{country.freelanceResidential}</p>
-              </div>
-              <div className="bg-white border border-green-200 rounded-2xl p-6 shadow-sm text-center">
-                <span className="text-3xl mb-3 block">🏢</span>
-                <h3 className="font-bold text-slate-900 text-lg mb-1">Commercial Projects</h3>
-                <p className="text-sm text-slate-500">Office spaces, retail stores & restaurant visualizations</p>
-                <p className="mt-3 text-green-600 font-black text-lg">{country.freelanceCommercial}</p>
-              </div>
-              <div className="bg-white border border-green-200 rounded-2xl p-6 shadow-sm text-center">
-                <span className="text-3xl mb-3 block">🎨</span>
-                <h3 className="font-bold text-slate-900 text-lg mb-1">Interior Styling</h3>
-                <p className="text-sm text-slate-500">3D walkthroughs & mood boards for interior clients</p>
-                <p className="mt-3 text-green-600 font-black text-lg">{country.freelanceInterior}</p>
-              </div>
-            </div>
-            <div className="mt-8 bg-white border-2 border-green-300 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl">💰</div>
-                <div>
-                  <p className="font-black text-slate-900 text-lg">Total Guaranteed Project Value</p>
-                  <p className="text-sm text-slate-500">Real clients. Real money. While you learn.</p>
-                </div>
-              </div>
-              <span className="text-3xl font-black text-green-600">{country.freelanceTotal}</span>
-            </div>
-          </div>
-        </section>
-
-        {/* 6. INCOME TIERS — The ROI */}
-        <section className="py-16 bg-white border-b border-slate-200">
-          <div className="max-w-5xl mx-auto px-5">
-            <div className="reveal text-center mb-10">
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-slate-900 tracking-tight mb-4">Your {country.formattedPrice} Investment <br className="hidden md:block" /><span className="text-orange-600">Pays for Itself 100x Over</span></h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {INCOME_TIERS.map((tier, i) => (
-                <div key={i} className="reveal bg-white border border-slate-200 rounded-2xl p-6 hover:border-orange-600/40 transition-all shadow-soft flex flex-col justify-between">
-                  <div className="flex items-center justify-between mb-4"><span className="text-sm font-bold text-slate-900 leading-tight w-2/3">{tier.label}</span><span className="text-3xl">{tier.icon}</span></div>
-                  <div className="flex items-center justify-between">
-                    <div><p className="text-[10px] font-mono text-slate-500 uppercase">Before</p><p className="text-slate-400 text-sm line-through">{tier.before}</p></div>
-                    <ArrowRight size={16} className="text-orange-600" />
-                    <div className="text-right"><p className="text-[10px] font-mono text-orange-500 uppercase">After</p><p className="text-orange-600 text-sm font-bold">{tier.after}</p></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 7. WHAT YOU GET — The Offer */}
-        <section className="py-16 md:py-20 bg-slate-50 border-y border-slate-200 grid-bg">
-          <div className="max-w-5xl mx-auto px-5">
-            <div className="reveal text-center mb-10">
-              <p className="text-orange-500 text-xs font-mono uppercase tracking-widest mb-3">Included with enrollment</p>
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-slate-900 tracking-tight mb-4">Everything You Need to Succeed, <span className="text-orange-600">Included Today</span></h2>
-              <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto">The complete design-to-render toolkit — courses, software, support, and resources.</p>
-            </div>
-            <div className="reveal max-w-3xl mx-auto bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-soft">
-              {VALUE_STACK_ITEMS.map((item, i) => (
-                <div key={i} className={`flex justify-between items-center px-6 py-4 ${i !== VALUE_STACK_ITEMS.length - 1 ? 'border-b border-slate-100' : ''}`}>
-                  <div className="flex items-center gap-3"><CheckCircle size={16} className="text-orange-500 shrink-0" /><span className="text-sm text-slate-800 font-medium">{item.name}</span></div>
-                  <span className="text-sm font-bold text-slate-500">{item.value}</span>
-                </div>
-              ))}
-              
-              <div className="bg-orange-50 border-t border-orange-100 px-6 py-4 flex flex-col sm:flex-row gap-3 justify-between items-center">
-                <div className="flex items-center gap-3"><CheckCircle2 size={16} className="text-orange-600 shrink-0" /><span className="text-sm text-orange-900 font-bold">All Software (Free/Student Edition Links)</span></div>
-                <span className="text-sm font-black text-orange-600">INCLUDED</span>
-              </div>
-
-              <div className="bg-orange-50/50 border-t border-orange-200 px-6 py-6 flex flex-col items-center gap-6 justify-center">
-                <div className="flex flex-col sm:flex-row gap-6 items-center justify-center w-full">
-                  <span className="text-slate-900 font-bold text-center">Lifetime Access + Free Updates</span>
-                </div>
-                <button onClick={openPaymentModal} className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-bold text-lg shadow-xl shadow-orange-500/20 hover:scale-[1.02] transition-all flex items-center justify-center gap-3 group premium-stroke whitespace-nowrap">
-                  <Download size={16} /> Get All 4 Courses — {country.formattedPrice} <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════ CTA #2 — After Value Stack ═══════ */}
-        <section className="py-8 md:py-10 px-4 md:px-5 bg-white">
-          <div className="max-w-3xl mx-auto">
-            <CtaWithTimer timeLeft={timeLeft} onClick={openPaymentModal} variant="green" formattedPrice={country.formattedPrice} formattedOriginalPrice={country.formattedOriginalPrice} discountPercent={discount} />
-          </div>
-        </section>
-
-        {/* 2. PROOF STATS */}
-        <section className="py-10 bg-slate-50 border-y border-slate-200 grid-bg">
-          <div className="max-w-5xl mx-auto px-5 grid grid-cols-2 md:grid-cols-4 gap-6">
-            {getFearStats(country).map((s, i) => (
-              <div key={i} className="text-center reveal">
-                <span className="text-2xl mb-2 block">{s.icon}</span>
-                <span className="text-3xl md:text-4xl font-display font-black text-orange-500">{s.stat}</span>
-                <p className="text-xs text-slate-500 mt-1 leading-snug">{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* MEET YOUR MENTORS */}
-        <TeamSection />
-
-        {/* 3. MANIFESTO — The Story & The Gap */}
-        <section className="py-16 md:py-28 grid-bg bg-white border-b border-slate-200">
-          <div className="max-w-3xl mx-auto px-5">
-            <div className="reveal text-center mb-12">
-              <p className="text-orange-500 text-xs font-mono uppercase tracking-widest mb-4">A Brutally Honest Truth About Design Careers in {country.name}</p>
-              <h2 className="text-3xl md:text-5xl font-serif italic text-slate-900 mb-8 leading-snug">"A university degree won't pay your bills. High-end practical skills will."</h2>
-            </div>
-            <div className="reveal space-y-6 text-slate-600 text-base md:text-lg leading-relaxed">
-              <p>Let's face the truth: In today's economy, nobody cares about your theoretical certificates. Premium clients in {country.premiumAreas} and foreign developers want one thing: **Stunning, photorealistic visuals that prove you can build their dream homes.**</p>
-              <p>If you cannot produce professional drawings and renders, you are forced to compete on low prices, taking home peanuts. Meanwhile, designers using the **AutoCAD → SketchUp → V-Ray & D5 Render AI** pipeline easily charge **{country.renderCharge} to {country.projectRange}** per design and deliver in 48 hours.</p>
-              <p>We built this bundle because we are tired of seeing young talents spend **{country.expensiveCourses}** on useless physical academies only to learn outdated tools. We teach you a complete, commercial workflow that is ready to launch you straight into premium freelance or studio employment.</p>
-              
-              <div className="my-10 bg-gradient-to-br from-orange-50 to-orange-50/50 border border-orange-200 rounded-2xl p-6 md:p-8 shadow-soft">
-                <p className="font-bold text-slate-900 text-xl mb-4">What Makes This Bundle Your Financial Shortcut:</p>
-                <ul className="space-y-3">
-                  <li className="flex items-center gap-3"><CheckCircle size={18} className="text-orange-500 shrink-0" /><span className="text-slate-800"><strong>AutoCAD</strong> — Draw construction-ready 2D blueprints that contractors can actually follow.</span></li>
-                  <li className="flex items-center gap-3"><CheckCircle size={18} className="text-orange-500 shrink-0" /><span className="text-slate-800"><strong>SketchUp</strong> — Model complex 3D interiors and villa structures step-by-step.</span></li>
-                  <li className="flex items-center gap-3"><CheckCircle size={18} className="text-orange-500 shrink-0" /><span className="text-slate-800"><strong>V-Ray</strong> — Master professional camera setups, materials, and photorealistic lighting.</span></li>
-                  <li className="flex items-center gap-3"><CheckCircle size={18} className="text-orange-500 shrink-0" /><span className="text-slate-800"><strong>D5 Render AI</strong> — Real-time rendering: see changes live and generate video walkthroughs in seconds.</span></li>
-                  <li className="flex items-center gap-3"><CheckCircle size={18} className="text-orange-500 shrink-0" /><span className="text-slate-800">24/7 expert mentorship, free software setups, and premium asset libraries included.</span></li>
-                </ul>
-                <div className="mt-6 pt-6 border-t border-orange-100 flex items-center justify-between">
-                  <span className="text-slate-600 text-sm italic font-bold">Secure lifetime access to the entire design ecosystem for just {country.formattedPrice}.</span>
-                  <button onClick={openPaymentModal} className="text-orange-600 font-bold text-sm hover:text-orange-700 flex items-center gap-1 group">Claim This Deal <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" /></button>
-                </div>
-              </div>
-
-              <p className="text-slate-900 font-semibold text-lg md:text-xl border-l-4 border-orange-500 pl-4 bg-orange-50 p-4 rounded-r-xl">Stop wasting your time on random tutorials. Start building an elite portfolio. 50,000+ students have already taken this shortcut — and it started with the same {country.formattedPrice} decision you are looking at right now.</p>
-            </div>
-          </div>
-        </section>
-
-
-        {/* 5. OLD vs NEW — The Contrast */}
-        <section className="py-16 md:py-24 bg-white grid-bg">
-          <div className="max-w-5xl mx-auto px-5">
-            <div className="reveal text-center mb-12"><h2 className="text-3xl md:text-5xl font-display font-bold text-slate-900 tracking-tight mb-4">The Slow, Frustrating Path <br className="hidden md:block" />vs. <span className="text-orange-600">Your {country.formattedPrice} Blueprint Shortcut</span></h2></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="reveal grid-bg border border-red-200 rounded-2xl p-8 shadow-soft">
-                <div className="flex items-center gap-3 mb-6"><div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center"><X size={20} className="text-red-500" /></div><h3 className="text-xl font-bold text-red-500">The Old Struggle</h3></div>
-                <ul className="space-y-4">
-                  {getProblemPoints(country).map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-600 text-sm"><span className="mt-1 shrink-0 text-base">{item.emoji}</span>{item.text}</li>
-                  ))}
-                  {[
-                    'Wasting costly mobile data watching fragmented tutorials with zero step-by-step logic',
-                    'Getting virus warnings or paying massive subscription fees to get AutoCAD and SketchUp working',
-                    'Wasting 5 years in college but graduating without a single modern render to show top design studios',
-                    'Being forced to beg clients for small payments because your 2D sketches do not look premium'
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-600 text-sm"><X size={14} className="text-red-500 mt-1 shrink-0" />{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="reveal bg-gradient-to-br from-orange-50 to-slate-50 border border-orange-200 rounded-2xl p-8 shadow-soft">
-                <div className="flex items-center gap-3 mb-6"><div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center"><CheckCircle size={20} className="text-orange-600" /></div><h3 className="text-xl font-bold text-slate-900">The {country.formattedPrice} Shortcut</h3></div>
-                <ul className="space-y-4">
-                  {[
-                    'AutoCAD: Draft professional 2D floor plans & site layouts from scratch in minutes',
-                    'SketchUp: Build beautiful, clean 3D structure models of homes, offices, and villas',
-                    'V-Ray & D5 Render AI: Produce magazine-ready photorealistic renders and fly-throughs',
-                    'Safe pre-activated software setup files included (zero extra license costs)',
-                    '24/7 Expert WhatsApp support: Get your rendering crashes resolved by mentors in real-time',
-                    `Guaranteed ${country.freelanceTotal} in freelance projects to recover your investment 13x over`
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-700 text-sm"><CheckCircle size={14} className="text-orange-500 mt-1 shrink-0" />{item}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-
-        {/* 8. TESTIMONIALS — Social Proof */}
-        <section className="py-16 md:py-24 bg-white overflow-hidden grid-bg">
-          <div className="max-w-5xl mx-auto px-5 mb-12">
-            <div className="text-center mb-12">
-              <p className="text-orange-500 text-xs font-mono uppercase tracking-widest mb-4">Student Reviews</p>
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-slate-900 tracking-tight mb-4">Students & <span className="text-orange-500">Professionals</span></h2>
-              <p className="text-slate-600 text-lg">50,000+ learners • 4.9★ average rating</p>
-            </div>
-
-            {/* Featured Transformations */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-              {TRANSFORMATION_STORIES.map((story, i) => (
-                <div key={i} className="reveal bg-gradient-to-br from-slate-50 to-orange-50 border border-slate-200 rounded-2xl p-8 shadow-soft relative overflow-hidden transition-all hover:border-orange-300">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-3xl"></div>
-                  <span className="text-4xl mb-4 block">{story.emoji}</span>
-                  <div className="flex items-center gap-2 mb-6"><span className="font-bold text-slate-900 text-lg">{story.name}</span><span className="text-sm font-medium text-orange-500">• {story.role}</span></div>
-                  <div className="mb-4"><p className="text-[10px] font-mono uppercase text-slate-400 mb-1 tracking-wider">Before</p><p className="text-slate-600 text-sm leading-relaxed">{story.before}</p></div>
-                  <div><p className="text-[10px] font-mono uppercase text-orange-500 mb-1 tracking-wider">After</p><p className="text-slate-900 text-base font-bold leading-relaxed">{story.after}</p></div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-6">
-            <div className="flex gap-6 animate-scroll-left hover:pause">
-              {[...TESTIMONIALS_LANDING, ...TESTIMONIALS_LANDING].map((t, i) => (
-                <div key={i} className="w-[350px] shrink-0 bg-white border border-slate-200 p-8 rounded-3xl hover:border-orange-200 transition-all shadow-soft">
-                  <div className="flex gap-1 mb-4">{[...Array(5)].map((_, j) => <Star key={j} size={14} className="fill-orange-500 text-orange-500" />)}</div>
-                  <p className="text-slate-700 text-sm leading-relaxed mb-6 italic">"{t.content}"</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center font-bold text-orange-500">{t.name[0]}</div>
-                    <div className="text-left">
-                      <p className="text-sm font-bold text-slate-900 flex items-center gap-1">{t.name} <CheckCircle size={12} className="text-orange-600" /></p>
-                      <p className="text-[10px] text-slate-500 uppercase tracking-widest">{t.role} • {t.location}</p>
+                      <div className="p-4 pt-0">
+                        <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-2 text-center text-xs font-mono text-zinc-700 flex items-center justify-center gap-1.5">
+                          <CheckCircle2 size={13} className="text-emerald-600" />
+                          <span>Included in {country.formattedPrice} Lifetime Pass</span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* 9. FAQ + FINAL CTA */}
-        <section className="py-16 md:py-24 bg-slate-50 border-t border-slate-200 grid-bg">
-          <div className="max-w-3xl mx-auto px-5 mb-16">
-            <div className="reveal text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-slate-900 tracking-tight mb-4">Common Questions</h2>
-              <p className="text-slate-600 text-base">All your questions, answered.</p>
-            </div>
-            <div className="space-y-3">
-              {FAQ_ITEMS_LANDING.map((faq, i) => (
-                <details key={i} className="reveal group bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-soft" open={openFaqIndex === i}>
-                  <summary className="flex items-center justify-between p-5 cursor-pointer list-none" onClick={(e) => { e.preventDefault(); setOpenFaqIndex(openFaqIndex === i ? null : i); }}>
-                    <span className="text-sm md:text-base font-semibold text-slate-900 pr-6">{faq.question}</span>
-                    <ChevronDown size={18} className={`text-slate-400 transition-transform shrink-0 ${openFaqIndex === i ? 'rotate-180' : ''}`} />
-                  </summary>
-                  <div className="px-5 pb-5"><p className="text-slate-600 text-sm leading-relaxed">{faq.answer}</p></div>
-                </details>
-              ))}
-            </div>
-          </div>
+                {/* Section CTA */}
+                <div className="max-w-xl mx-auto">
+                  <CtaWithTimer 
+                    timeLeft={timeLeft} 
+                    onClick={openPaymentModal} 
+                    variant="default"
+                    title="GET ALL 4 COURSES NOW"
+                    formattedPrice={country.formattedPrice}
+                    formattedOriginalPrice={country.formattedOriginalPrice}
+                    discountPercent={discount}
+                  />
+                </div>
 
-          {/* ═══════ CTA #3 — Final CTA ═══════ */}
-          <div className="max-w-3xl mx-auto px-4 md:px-5">
-            <div className="text-center mb-6 md:mb-8">
-              <h3 className="text-xl md:text-3xl font-display font-bold text-slate-900 mb-2">Your future portfolio is one click away.</h3>
-              <p className="text-slate-500 text-xs md:text-sm">50,000+ students chose this path. AutoCAD + SketchUp + V-Ray + D5 Render AI for {country.formattedPrice}. Lifetime access. Zero risk.</p>
+              </div>
+            </section>
+
+            <Pattern />
+
+            {/* ═══ 6 FREE BONUSES ═══ */}
+            <section className="screen-line-before screen-line-after border-x border-grid py-8 sm:py-12 bg-zinc-50/50">
+              <div className="px-3 sm:px-4">
+                <div className="text-center mb-6">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-0.5 bg-zinc-950 text-white rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-wider mb-1.5">
+                    <Gift size={13} /> EXCLUSIVE SUPER-BONUSES INCLUDED
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-heading font-bold text-zinc-950">
+                    Unlock 6 Exclusive Super-Bonuses
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 mb-6">
+                  {FREE_BONUSES.map((b) => (
+                    <div key={b.id} className="bg-white border border-zinc-200 rounded-xl p-4 hover:border-zinc-400 transition-colors duration-150 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-2xl">{b.icon}</span>
+                          <div className="text-right">
+                            <span className="text-[9px] font-mono font-bold uppercase tracking-wider bg-zinc-100 text-zinc-800 px-2 py-0.5 rounded border border-zinc-200 block mb-0.5">{b.badge}</span>
+                            <span className="text-xs font-mono font-bold text-emerald-600">FREE</span>
+                          </div>
+                        </div>
+
+                        <h3 className="font-heading font-bold text-zinc-950 text-sm sm:text-base mb-1">{b.title}</h3>
+                        <p className="text-xs text-zinc-600 leading-relaxed mb-3">{b.desc}</p>
+                      </div>
+
+                      <div className="bg-zinc-50 border border-zinc-200 rounded-lg p-1.5 text-center text-xs font-mono text-zinc-700 flex items-center justify-center gap-1">
+                        <span className="highlight-green font-bold text-[11px]">✓ Included Free Today</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Mid Page CTA Box */}
+                <div className="max-w-xl mx-auto">
+                  <CtaWithTimer 
+                    timeLeft={timeLeft} 
+                    onClick={openPaymentModal} 
+                    variant="white"
+                    title="CLAIM 4 COURSES + ALL 6 BONUSES NOW"
+                    formattedPrice={country.formattedPrice}
+                    formattedOriginalPrice={country.formattedOriginalPrice}
+                    discountPercent={discount}
+                  />
+                </div>
+              </div>
+            </section>
+
+            <Pattern />
+
+            {/* ═══ FAQ SECTION ═══ */}
+            <section className="screen-line-before screen-line-after border-x border-grid py-8 sm:py-12 bg-zinc-50/50">
+              <div className="max-w-3xl mx-auto px-3 sm:px-4">
+                <div className="text-center mb-6">
+                  <span className="text-[10px] sm:text-xs font-mono font-medium text-zinc-700 bg-zinc-200/80 px-3 py-0.5 rounded-full">
+                    ❓ Frequently asked questions
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-heading font-bold text-zinc-950 mt-2">
+                    Frequently Asked Questions
+                  </h2>
+                </div>
+
+                <div className="space-y-2">
+                  {FAQ_ITEMS_LANDING.map((faq, i) => (
+                    <div 
+                      key={i} 
+                      className="bg-white border border-zinc-200 rounded-xl overflow-hidden transition-colors duration-150"
+                    >
+                      <button
+                        onClick={() => setOpenFaqIndex(openFaqIndex === i ? null : i)}
+                        className="w-full flex items-center justify-between p-3.5 sm:p-4 text-left font-heading font-semibold text-zinc-950 text-sm sm:text-base gap-3 cursor-pointer"
+                      >
+                        <span>{faq.question}</span>
+                        <ChevronDown size={16} className={`text-zinc-400 shrink-0 transition-transform duration-200 ${openFaqIndex === i ? 'rotate-180 text-zinc-950' : ''}`} />
+                      </button>
+                      {openFaqIndex === i && (
+                        <div className="px-3.5 sm:px-4 pb-3.5 pt-0 text-zinc-600 text-xs sm:text-sm leading-relaxed border-t border-zinc-100 pt-2">
+                          {faq.answer}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          </main>
+
+          <Pattern />
+
+          {/* ═══ FOOTER ═══ */}
+          <footer className="screen-line-before border-x border-grid py-8 pb-28 px-4 text-center text-xs bg-white text-zinc-500">
+            <div className="max-w-3xl mx-auto flex flex-col items-center gap-2.5">
+              <Logo />
+              <p className="text-zinc-500 text-[11px] mt-1">
+                © 2026 Avada Design & Architecture. All rights reserved. Helping 50,000+ designers succeed.
+              </p>
+              <div className="flex justify-center gap-3 text-[11px] font-mono text-zinc-500 uppercase tracking-wider">
+                <a href="/checkout" className="hover:text-zinc-900 transition-colors">Order Now</a>
+                <span>•</span>
+                <a href="https://wa.me/918545015333" target="_blank" rel="noreferrer" className="hover:text-zinc-900 transition-colors">24/7 WhatsApp Support</a>
+              </div>
             </div>
-            <CtaWithTimer timeLeft={timeLeft} onClick={openPaymentModal} variant="dark" formattedPrice={country.formattedPrice} formattedOriginalPrice={country.formattedOriginalPrice} discountPercent={discount} />
-          </div>
-        </section>
-      </main>
+          </footer>
 
-      <footer className="bg-slate-900 py-12 px-6 text-center border-t border-slate-800 text-white/70">
-        <p className="text-xs uppercase tracking-[0.2em] mb-4">Avada Design & Architecture • 2026</p>
-        <div className="flex justify-center gap-6 text-[10px] font-bold uppercase tracking-widest text-slate-400"><span>Privacy</span><span>Terms</span><span>Support</span></div>
-      </footer>
-
-      {/* ═══ WHATSAPP FLOAT ═══ */}
-      <a href="https://wa.me/919198747810" target="_blank" rel="noopener noreferrer" 
-        className="fixed bottom-16 right-4 z-[75] flex items-center gap-2 bg-slate-900 text-white text-[11px] font-bold px-3 py-2 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all"
-        style={{ boxShadow: '0 4px 0 #000, 0 6px 16px rgba(0,0,0,0.3)' }}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        <span className="hidden sm:inline">Chat with us</span>
-      </a>
-
-      {/* ═══ STICKY BOTTOM BAR ═══ */}
-      <div className={`fixed bottom-0 left-0 right-0 z-[70] transition-transform duration-500 ${showStickyBar ? 'translate-y-0' : 'translate-y-full'}`}>
-        <div className="w-full bg-white/98 backdrop-blur-2xl border-t border-slate-100 shadow-[0_-1px_40px_rgba(15,23,42,0.12)] px-4 py-2.5 flex items-center gap-3">
-          {/* Left: price + timer */}
-          <div className="flex flex-col items-start gap-0.5 shrink-0">
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-base font-black text-slate-900">{country.formattedPrice}</span>
-              <span className="text-[10px] font-black text-slate-900 uppercase tracking-wide">Offer ends in</span>
-            </div>
-            <div className="flex items-center gap-0.5">
-              {[formatTime(timeLeft.h), formatTime(timeLeft.m), formatTime(timeLeft.s)].map((val, i) => (
-                <span key={i} className="flex items-center gap-0.5">
-                  <span className="bg-slate-900 text-white text-[11px] font-black font-mono px-1.5 py-0.5 rounded tabular-nums">{val}</span>
-                  {i < 2 && <span className="text-slate-400 text-[10px] font-bold mx-0.5">:</span>}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: CTA button */}
-          <div className="flex-1 flex flex-col gap-1">
-            <button onClick={openPaymentModal} className="flex-1 flex items-center justify-center gap-1.5 bg-slate-900 text-white text-xs font-bold py-3 rounded-xl hover:bg-black transition-all"
-              style={{ boxShadow: '0 0 0 2px #f97316, 0 0 12px rgba(249,115,22,0.35)' }}>
-              Get All 4 Courses — {country.formattedPrice}
-              <ArrowRight size={13} />
-            </button>
-          </div>
         </div>
       </div>
 
+      {/* ═══ WHATSAPP FLOATING BUTTON ═══ */}
+      <a 
+        href="https://wa.me/918545015333?text=Hi%20Avada%20Team%2C%20I%20have%20a%20question%20about%20the%20Architecture%20Bundle" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        aria-label="WhatsApp Support"
+        className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] right-3.5 z-[75] flex items-center gap-1.5 bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-mono font-medium px-3 py-2 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-transform duration-150"
+        style={{ boxShadow: '0 4px 16px rgba(37,211,102,0.35)' }}
+      >
+        <MessageCircle size={16} className="fill-white" />
+        <span className="hidden sm:inline">WhatsApp Help</span>
+      </a>
+
+      {/* ═══ STICKY BOTTOM BAR (ALWAYS VISIBLE UPON LANDING) ═══ */}
+      <div className="fixed bottom-0 left-0 right-0 z-[70] bg-white/95 backdrop-blur-md border-t border-zinc-200 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] translate-y-0">
+        <div className="max-w-4xl mx-auto px-3.5 py-2 flex items-center justify-between gap-3">
+          
+          <div className="flex flex-col min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="text-xl sm:text-2xl font-heading font-extrabold text-zinc-950">{country.formattedPrice}</span>
+              <span className="inline-flex items-center gap-1 font-mono font-bold text-[11px] sm:text-xs bg-red-50 text-red-600 border border-red-200/80 px-2 py-0.5 rounded-md shadow-2xs">
+                <span>⏱</span>
+                <span>{formatTime(timeLeft.h)}:{formatTime(timeLeft.m)}:{formatTime(timeLeft.s)}</span>
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-zinc-600 font-medium truncate mt-0.5">
+              <span className="size-1.5 rounded-full bg-red-500 animate-pulse shrink-0" />
+              <span className="font-bold text-red-700">Special Offer</span>
+              <span className="text-zinc-300">•</span>
+              <span className="text-zinc-700">Ends {getSameDayDate()}</span>
+            </div>
+          </div>
+
+          <button
+            onClick={openPaymentModal}
+            className="btn-3d py-2.5 px-4 sm:px-6 text-xs sm:text-sm font-heading font-bold flex items-center justify-center gap-1.5 cursor-pointer shrink-0 select-none"
+            style={{ borderBottomWidth: '4px' }}
+          >
+            <span>Get All 4 Courses</span>
+            <Download size={15} className="shrink-0 stroke-[2.5]" />
+          </button>
+        </div>
+      </div>
+
+      {/* ═══ EXIT-INTENT MODAL ═══ */}
+      {showExitModal && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-[fadeIn_0.2s_ease]">
+          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-5 sm:p-6 text-center border border-zinc-200 overflow-hidden">
+            <button 
+              onClick={() => setShowExitModal(false)}
+              className="absolute top-3 right-3 size-7 rounded-full bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center text-zinc-600 transition-colors cursor-pointer"
+            >
+              <X size={15} />
+            </button>
+
+            <span className="bg-zinc-100 text-zinc-800 text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider border border-zinc-200">
+              Special offer active
+            </span>
+
+            <h3 className="text-lg sm:text-xl font-heading font-bold text-zinc-950 mt-2 mb-1.5">
+              Wait! This Special {country.formattedPrice} Offer Won't Last!
+            </h3>
+
+            <p className="text-zinc-600 text-xs leading-relaxed mb-3.5">
+              Over <strong>50,000+ designers</strong> are already using these 4 courses & 10,000+ 3D models. If you close this page, price will increase to <strong>{country.formattedOriginalPrice}</strong>!
+            </p>
+
+            <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-2.5 mb-3.5 text-left text-xs text-zinc-700 space-y-1 font-medium">
+              <div className="flex items-center gap-2 text-zinc-900">
+                <CheckCircle size={13} className="text-zinc-900 shrink-0" />
+                <span>Instant Google Drive Delivery in 60 Secs</span>
+              </div>
+              <div className="flex items-center gap-2 text-zinc-900">
+                <CheckCircle size={13} className="text-zinc-900 shrink-0" />
+                <span>AutoCAD, SketchUp, V-Ray & D5 Render AI</span>
+              </div>
+              <div className="flex items-center gap-2 text-zinc-900">
+                <CheckCircle size={13} className="text-zinc-900 shrink-0" />
+                <span>24/7 Dedicated WhatsApp Support Team</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => {
+                  setShowExitModal(false);
+                  openPaymentModal();
+                }}
+                className="btn-premium animate-pulse-slow w-full py-3 rounded-full font-heading font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <Zap size={14} className="fill-white" />
+                <span>Lock My Access Now</span>
+              </button>
+
+              <button
+                onClick={() => setShowExitModal(false)}
+                className="text-[11px] text-zinc-400 hover:text-zinc-600 py-0.5 transition-colors font-mono cursor-pointer"
+              >
+                No thanks, I will pay {country.formattedOriginalPrice} later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ═══ SOCIAL PROOF TOAST ═══ */}
       <SocialProofToast />
+
     </div>
   );
 };
